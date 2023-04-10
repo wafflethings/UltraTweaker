@@ -27,8 +27,12 @@ namespace Extension
         {
             Debug.Log($"{Name} has started.");
 
+            // This creates a new page.
             SettingUIHandler.Pages.Add($"{GUID}.ext_page", new SettingUIHandler.Page("EXTENSION: TWEAKS"));
+
             Assets = AssetBundle.LoadFromFile(BundlePath);
+
+            // This adds this assembly to the ones that get checked for tweaks.
             UltraTweaker.UltraTweaker.AddAssembly(Assembly.GetExecutingAssembly());
         }
     }
