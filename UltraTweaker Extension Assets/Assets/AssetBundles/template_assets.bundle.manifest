@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 3714498166
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 4ba89cf706a3385d96f45f42d9826b7b
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c90fc19e2679e5295d10bd00f33cb4c3
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Mutator Icons/TestIcon.png
+Dependencies: []

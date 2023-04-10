@@ -31,6 +31,8 @@ namespace UltraTweaker.Tweaks
         }
 
         public abstract void Deserialize(string str);
+
+        public abstract void ResetValue();
     }
 
     public class TypedSubsetting<T> : Subsetting
@@ -43,6 +45,11 @@ namespace UltraTweaker.Tweaks
         public TypedSubsetting(Tweak parent, Metadata metadata, SubsettingUIElement element) : base(parent, metadata, element)
         {
 
+        }
+
+        public override void ResetValue()
+        {
+            value = defaultValue;
         }
     }
 

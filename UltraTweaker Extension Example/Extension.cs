@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UltraTweaker.Tweaks;
 using UltraTweaker.Handlers;
+using UltraTweaker;
+using System.IO;
 
 namespace Extension
 {
@@ -18,11 +20,15 @@ namespace Extension
         public const string Name = "Extension";
         public const string Version = "1.0.0";
 
+        public static readonly string BundlePath = Path.Combine(PathUtils.ModPath(Assembly.GetExecutingAssembly()), "Assets", "template_assets.bundle");
+        public static AssetBundle Assets;
+
         public void Start()
         {
             Debug.Log($"{Name} has started.");
 
             SettingUIHandler.Pages.Add($"{GUID}.ext_page", new SettingUIHandler.Page("EXTENSION: TWEAKS"));
+            Assets = AssetBundle.LoadFromFile(BundlePath);
             UltraTweaker.UltraTweaker.AddAssembly(Assembly.GetExecutingAssembly());
         }
     }

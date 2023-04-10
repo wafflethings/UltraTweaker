@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 2628805847
+CRC: 869493095
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: ultratweaker_assets.bundle
+      Name: template_assets.bundle
       Dependencies: {}

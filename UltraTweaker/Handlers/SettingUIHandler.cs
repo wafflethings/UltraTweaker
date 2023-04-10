@@ -16,6 +16,9 @@ namespace UltraTweaker.Handlers
         public static GameObject originalSettingPage;
         public static GameObject originalPageButton;
         public static GameObject currentSettingMenu;
+        public static GameObject originalResetButton;
+        public static GameObject currentResetButton;
+        public static GameObject newBtn;
 
         public static Dictionary<string, Page> Pages = new()
         {
@@ -46,6 +49,11 @@ namespace UltraTweaker.Handlers
             if (originalPageButton == null)
             {
                 originalPageButton = AssetHandler.Bundle.LoadAsset<GameObject>("Page Button.prefab");
+            }
+
+            if (originalResetButton == null)
+            {
+                originalResetButton = AssetHandler.Bundle.LoadAsset<GameObject>("Reset Button.prefab");
             }
 
             currentSettingMenu = GameObject.Instantiate(originalSettingMenu, optionsMenu.transform);
@@ -82,13 +90,26 @@ namespace UltraTweaker.Handlers
                 });
                 pageButton.ChildByName("Text").GetComponent<Text>().text = (PagesSoFar + 1).ToString();
 
+                if(PagesSoFar == 0)
+                {
+                    currentResetButton = GameObject.Instantiate(originalResetButton, page.PageObject.GetComponentInChildren<LayoutGroup>(true).transform);
+                    currentResetButton.GetComponent<Button>().onClick.AddListener(() =>
+                    {
+                        ResetAllSettings();
+                        GameObject.Destroy(currentSettingMenu);
+                        GameObject.Destroy(newBtn);
+                        CreateUI(optionsMenu);
+                        currentSettingMenu.SetActive(true);
+                    });
+                }
+
                 PagesSoFar += 1;
             }
 
             foreach (Tweak tw in UltraTweaker.AllTweaks.Values)
             {
                 TweakMetadata meta = Attribute.GetCustomAttribute(tw.GetType(), typeof(TweakMetadata)) as TweakMetadata;
-                tw.Element.Create(Pages[meta.PageId].PageObject.GetComponentInChildren<VerticalLayoutGroup>().transform).transform.SetSiblingIndex(meta.insertAt);
+                tw.Element.Create(Pages[meta.PageId].PageObject.GetComponentInChildren<VerticalLayoutGroup>().transform).transform.SetSiblingIndex(meta.InsertAt);
                 
                 foreach (Subsetting sub in tw.Subsettings.Values)
                 {
@@ -96,7 +117,7 @@ namespace UltraTweaker.Handlers
                 }
             }
 
-            GameObject newBtn = GameObject.Instantiate(optionsMenu.ChildByName("Gameplay"), optionsMenu.transform);
+            newBtn = GameObject.Instantiate(optionsMenu.ChildByName("Gameplay"), optionsMenu.transform);
 
             newBtn.transform.localPosition += new Vector3(0, (95 * 1080) / Screen.height, 0);
             Vector3 newPos = newBtn.transform.position;
@@ -138,8 +159,22 @@ namespace UltraTweaker.Handlers
                 currentSettingMenu.SetActive(true);
             });
 
+            currentResetButton.transform.SetAsFirstSibling();
             currentSettingMenu.AddComponent<HudOpenEffect>();
             currentSettingMenu.SetActive(false);
+        }
+
+        public static void ResetAllSettings()
+        {
+            foreach (Tweak tw in UltraTweaker.AllTweaks.Values)
+            {
+                tw.IsEnabled = false;
+
+                foreach (Subsetting sub in tw.Subsettings.Values)
+                {
+                    sub.ResetValue();
+                }
+            }
         }
 
         public class SettingUIPatches

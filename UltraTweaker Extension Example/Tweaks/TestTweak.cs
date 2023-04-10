@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
+using UltraTweaker.Handlers;
 using UltraTweaker.Tweaks;
 using UnityEngine;
 
 namespace Extension.Tweaks
 {
-    [TweakMetadata("Test Tweak", $"{Extension.GUID}.tweak", "This is a tweak.", $"{Extension.GUID}.ext_page", 0)]
+    [TweakMetadata("Test Tweak", $"{Extension.GUID}.tweak", "This is a tweak.", $"{Extension.GUID}.ext_page", 0, "TestIcon")]
     public class TestTweak : Tweak
     {
         private Harmony harmony = new($"{Extension.GUID}.tweak");
@@ -17,6 +18,8 @@ namespace Extension.Tweaks
 
         public TestTweak()
         {
+            AssetHandler.CacheAsset<Sprite>("TestIcon", Extension.Assets);
+
             Subsettings = new()
             {
                 { "cool_subsetting", new FloatSubsetting(this, new Metadata("Subsetting", "cool_subsetting", "This is a subsetting."),

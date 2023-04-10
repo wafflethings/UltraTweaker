@@ -23,9 +23,14 @@ namespace UltraTweaker
             return path;
         }
 
-        public static string ModPath()
+        public static string ModPath(Assembly asm = null)
         {
-            return Assembly.GetExecutingAssembly().Location.Substring(0, Assembly.GetExecutingAssembly().Location.LastIndexOf(@"\"));
+            if (asm == null)
+            {
+                asm = Assembly.GetExecutingAssembly();
+            }
+
+            return asm.Location.Substring(0, asm.Location.LastIndexOf(@"\"));
         }
     }
 

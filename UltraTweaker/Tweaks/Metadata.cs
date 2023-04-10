@@ -33,10 +33,8 @@ namespace UltraTweaker.Tweaks
     /// </summary>
     public class TweakMetadata : Metadata
     {
-        private static Dictionary<string, Sprite> PreloadedAssets = new();
-
         public string PageId { get; private set; }
-        public int insertAt { get; private set; }
+        public int InsertAt { get; private set; }
         public Sprite Icon { get; private set; }
         public bool AllowCG { get; private set; }
         public bool ShowOnEndScreen { get; private set; }
@@ -48,25 +46,21 @@ namespace UltraTweaker.Tweaks
         /// <param name="ID">The ID, used for saving.</param>
         /// <param name="Description">Text that appears when you hover on the option name.</param>
         /// <param name="PageId">Which page should the tweak be on?</param>
-        /// <param name="insertAt">What position on the page it is inserted at.</param>
-        /// <param name="iconName">The name of the icon. It will try to find one from each modded bundle.</param>
+        /// <param name="InsertAt">What position on the page it is inserted at.</param>
+        /// <param name="IconName">The name of the icon. Make sure to cache it with <see cref="AssetHandler.CacheAsset{T}(string, AssetBundle)"/></param>
         /// <param name="AllowCG">Should this tweak disable The Cyber Grind?</param>
         /// <param name="ShowOnEndScreen">Should the tweak appear on the end screen?</param>
-        public TweakMetadata(string Name, string ID, string Description = "", string PageId = $"{UltraTweaker.GUID}.misc", int insertAt = 0, string iconName = null, bool AllowCG = true, bool ShowOnEndScreen = false) : base(Name, ID, Description)
+        public TweakMetadata(string Name, string ID, string Description = "", string PageId = $"{UltraTweaker.GUID}.misc", int InsertAt = 0, string IconName = null, bool AllowCG = true, bool ShowOnEndScreen = false) : base(Name, ID, Description)
         {
+            if (IconName != null)
+            {
+                Icon = AssetHandler.GetCachedAsset<Sprite>(IconName);
+            }
+
             this.PageId = PageId;
-            this.insertAt = insertAt;
+            this.InsertAt = InsertAt;
             this.AllowCG = AllowCG;
             this.ShowOnEndScreen = ShowOnEndScreen;
-
-            if (iconName != null)
-            {
-                if (!PreloadedAssets.ContainsKey(iconName))
-                {
-                    PreloadedAssets.Add(iconName, AssetHandler.Bundle.LoadAsset<Sprite>(iconName));
-                }
-                Icon = PreloadedAssets[iconName];
-            }
         }
     }
 }
