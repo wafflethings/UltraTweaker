@@ -20,8 +20,7 @@ namespace UltraTweaker.Handlers
             "look at this cat https://youtu.be/RL6-etT59w4",
             "holy shit look at this cat https://youtu.be/4BrQGoEJNaU",
             ":3 https://youtu.be/fUza3qYpw8Q",
-            "access denied :3 https://youtu.be/VM5hIhFpbZE",
-            "half life interact sound effect :3 https://youtu.be/Ni_33w4KL2Q"
+            "maow https://www.youtu.be/s1TsnnqgkoY"
         };
 
         public static void SaveData()
