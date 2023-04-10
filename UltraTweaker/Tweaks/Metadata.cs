@@ -1,0 +1,72 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UltraTweaker.Handlers;
+using UnityEngine;
+
+namespace UltraTweaker.Tweaks
+{
+    public class Metadata : Attribute
+    {
+        public string Name { get; private set; }
+        public string ID { get; private set; }
+        public string Description { get; private set; }
+
+        /// <summary>
+        /// The generic metadata. Applies to both tweaks and subsettings.
+        /// </summary>
+        /// <param name="Name">The name of the option.</param>
+        /// <param name="ID">The ID, used for saving.</param>
+        /// <param name="Description">Text that appears when you hover on the option name.</param>
+        public Metadata(string Name, string ID, string Description = "")
+        {
+            this.Name = Name;
+            this.ID = ID;
+            this.Description = Description;
+        }
+    }
+
+    /// <summary>
+    /// Tweak-specific metadata. Not for subsettings.
+    /// </summary>
+    public class TweakMetadata : Metadata
+    {
+        private static Dictionary<string, Sprite> PreloadedAssets = new();
+
+        public string PageId { get; private set; }
+        public int insertAt { get; private set; }
+        public Sprite Icon { get; private set; }
+        public bool AllowCG { get; private set; }
+        public bool ShowOnEndScreen { get; private set; }
+
+        /// <summary>
+        /// Tweak-specific metadata. Not for subsettings.
+        /// </summary>
+        /// <param name="Name">The name of the option.</param>
+        /// <param name="ID">The ID, used for saving.</param>
+        /// <param name="Description">Text that appears when you hover on the option name.</param>
+        /// <param name="PageId">Which page should the tweak be on?</param>
+        /// <param name="insertAt">What position on the page it is inserted at.</param>
+        /// <param name="iconName">The name of the icon. It will try to find one from each modded bundle.</param>
+        /// <param name="AllowCG">Should this tweak disable The Cyber Grind?</param>
+        /// <param name="ShowOnEndScreen">Should the tweak appear on the end screen?</param>
+        public TweakMetadata(string Name, string ID, string Description = "", string PageId = $"{UltraTweaker.GUID}.misc", int insertAt = 0, string iconName = null, bool AllowCG = true, bool ShowOnEndScreen = false) : base(Name, ID, Description)
+        {
+            this.PageId = PageId;
+            this.insertAt = insertAt;
+            this.AllowCG = AllowCG;
+            this.ShowOnEndScreen = ShowOnEndScreen;
+
+            if (iconName != null)
+            {
+                if (!PreloadedAssets.ContainsKey(iconName))
+                {
+                    PreloadedAssets.Add(iconName, AssetHandler.Bundle.LoadAsset<Sprite>(iconName));
+                }
+                Icon = PreloadedAssets[iconName];
+            }
+        }
+    }
+}

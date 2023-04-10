@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UltraTweaker</name>
+    </assembly>
+    <members>
+        <member name="T:System.Runtime.CompilerServices.IsExternalInit">
+            <summary>
+                Reserved to be used by the compiler for tracking metadata.
+                This class should not be used by developers in source code.
+            </summary>
+            <remarks>
+                This definition is provided by the <i>IsExternalInit</i> NuGet package (https://www.nuget.org/packages/IsExternalInit).
+                Please see https://github.com/manuelroemer/IsExternalInit for more information.
+            </remarks>
+        </member>
+        <member name="M:UltraTweaker.Tweaks.Metadata.#ctor(System.String,System.String,System.String)">
+            <summary>
+            The generic metadata. Applies to both tweaks and subsettings.
+            </summary>
+            <param name="Name">The name of the option.</param>
+            <param name="ID">The ID, used for saving.</param>
+            <param name="Description">Text that appears when you hover on the option name.</param>
+        </member>
+        <member name="T:UltraTweaker.Tweaks.TweakMetadata">
+            <summary>
+            Tweak-specific metadata. Not for subsettings.
+            </summary>
+        </member>
+        <member name="M:UltraTweaker.Tweaks.TweakMetadata.#ctor(System.String,System.String,System.String,System.String,System.Int32,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Tweak-specific metadata. Not for subsettings.
+            </summary>
+            <param name="Name">The name of the option.</param>
+            <param name="ID">The ID, used for saving.</param>
+            <param name="Description">Text that appears when you hover on the option name.</param>
+            <param name="PageId">Which page should the tweak be on?</param>
+            <param name="insertAt">What position on the page it is inserted at.</param>
+            <param name="iconName">The name of the icon. It will try to find one from each modded bundle.</param>
+            <param name="AllowCG">Should this tweak disable The Cyber Grind?</param>
+            <param name="ShowOnEndScreen">Should the tweak appear on the end screen?</param>
+        </member>
+        <member name="T:UltraTweaker.Tweaks.Tweak">
+            <summary>
+            The tweak. Extends from MonoBehaviour, only one is ever made.
+            </summary>
+        </member>
+        <member name="M:UltraTweaker.Tweaks.Tweak.GetInstance``1">
+            <summary>
+            Used to get the instance of the tweak.
+            </summary>
+        </member>
+        <member name="P:UltraTweaker.Tweaks.Tweak.Element">
+            <summary>
+            The current UI element for this tweak.
+            </summary>
+        </member>
+        <member name="M:UltraTweaker.Tweaks.Tweak.OnTweakEnabled">
+            <summary>
+            Called whenever the tweak is toggled on.
+            </summary>
+        </member>
+        <member name="M:UltraTweaker.Tweaks.Tweak.OnTweakDisabled">
+            <summary>
+            Called whenever the tweak is toggled off.
+            </summary>
+        </member>
+        <member name="M:UltraTweaker.Tweaks.Tweak.OnSubsettingUpdate">
+            <summary>
+            Called whenever any subsetting's value is changed.
+            </summary>
+        </member>
+        <member name="M:UltraTweaker.Tweaks.Tweak.IsGameplayScene">
+            <summary>
+            True if the current scene has gameplay.
+            This means not the Main Menu, any intermission, or 2-S.
+            </summary>
+        </member>
+    </members>
+</doc>

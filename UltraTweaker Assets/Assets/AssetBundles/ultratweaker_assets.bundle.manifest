@@ -1,0 +1,97 @@
+ManifestFileVersion: 0
+CRC: 1870167627
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f1150505b1e298e440e21c5fd2bc09e2
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: ce7dc51e0370e7bc414395eed7ea40dd
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2a4db7a114972834c8e4117be1d82ba3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0d0b652f32a2cc243917e4028fa0f046, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 223
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+Assets:
+- Assets/Mutator Icons/No CG.png
+- Assets/Mutator Icons/Ultrahot.png
+- Assets/Florp/Florp.prefab
+- Assets/Mutator Icons/Tankify.png
+- Assets/FPS/FPS.prefab
+- Assets/Mutator Icons/Fragility.png
+- Assets/Mutator Icons/Ice.png
+- Assets/Florp/Red Florp.prefab
+- Assets/Settings Menu/Elements/Subsetting/Dropdown Subsetting.prefab
+- Assets/Settings Menu/Elements/Subsetting/Toggle Subsetting.prefab
+- Assets/Settings Menu/Elements/Tweak Setting.prefab
+- Assets/Settings Menu/Settings Page.prefab
+- Assets/Mutator Icons/Mitosis.png
+- Assets/Settings Menu/Assets/speech.png
+- Assets/Mutator Icons/Submerged.png
+- Assets/Settings Menu/Elements/Subsetting/Slider Subsetting.prefab
+- Assets/Mutator Icons/Leak.png
+- Assets/Settings Menu/Assets/pip.png
+- Assets/Mutator Icons/Fresh.png
+- Assets/Mutator Icons/Speed.png
+- Assets/Stat Panels/All Panels.prefab
+- Assets/Settings Menu/Settings Menu.prefab
+- Assets/Dice Roll/Dice.prefab
+- Assets/Settings Menu/Page Button.prefab
+- Assets/CG Utils/Cybergrind Stats.prefab
+- Assets/Settings Menu/Template Settings.prefab
+- Assets/Mutator Icons/Cross.png
+- Assets/Mutator Icons/Sandify.png
+- Assets/Florp/Blue Florp.prefab
+- Assets/Mutator Icons/Lava.png
+Dependencies: []

@@ -1,0 +1,147 @@
+﻿using HarmonyLib;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+namespace UltraTweaker.Tweaks.Impl
+{
+    [TweakMetadata("CG Music", $"{UltraTweaker.GUID}.cg_music", "Replace the music for The Cyber Grind.", $"{UltraTweaker.GUID}.cybergrind", 1)]
+    public class CGMusic : Tweak
+    {
+        private Harmony harmony = new($"{UltraTweaker.GUID}.cg_music");
+        public static readonly string MusicPath = Path.Combine(PathUtils.ModPath(), "Cybergrind Music");
+
+        public List<AudioClip> Music;
+        public List<AudioClip> MusicPool;
+
+        private AudioClip LastClip;
+        public AudioSource Source;
+
+        public Coroutine MCL;
+
+        public override void OnTweakEnabled()
+        {
+            base.OnTweakEnabled();
+            harmony.PatchAll(typeof(CGMusicPatches));
+        }
+
+        public override void OnTweakDisabled()
+        {
+            base.OnTweakDisabled();
+            harmony.UnpatchSelf();
+        }
+
+        public override void OnSceneLoad(Scene scene, LoadSceneMode mode)
+        {
+            if (MCL != null)
+            {
+                StopCoroutine(MCL);
+            }
+
+            if (SceneManager.GetActiveScene().name == "Endless")
+            {
+                MusicPool = new();
+                Music = GetClipsFromFolder();
+                MusicPool.AddRange(Music);
+                Source = new GameObject("UltraTweaker: CG Music Manager").AddComponent<AudioSource>();
+                Source.outputAudioMixerGroup = MusicManager.Instance.bossTheme.outputAudioMixerGroup;
+                StartCoroutine(StartWithTimer());
+            }
+        }
+
+        public static List<AudioClip> GetClipsFromFolder()
+        {
+            string[] allFiles = Directory.GetFiles(MusicPath);
+
+            string[] supportedFileExtensions = new string[]
+            {
+                ".mp3",
+                ".ogg",
+                ".wav",
+                ".aiff",
+                ".mod",
+                ".it",
+                ".s3m",
+                ".xm"
+            };
+
+            List<AudioClip> clips = new();
+
+            foreach (string file in allFiles)
+            {
+                foreach (string fileext in supportedFileExtensions)
+                {
+                    if (file.EndsWith(fileext))
+                    {
+                        WWW www = new("file:///" + file);
+                        while (!www.isDone)
+                        {
+                        }
+                        clips.Add(www.GetAudioClip());
+                    }
+                }
+            }
+
+            return clips;
+        }
+
+        public AudioClip RandomClip()
+        {
+            if (MusicPool.Count == 0)
+            {
+                MusicPool.AddRange(Music);
+            }
+            LastClip = MusicPool[UnityEngine.Random.Range(0, MusicPool.Count)];
+            MusicPool.Remove(LastClip);
+            return LastClip;
+        }
+
+        public IEnumerator StartWithTimer()
+        {
+            while (!StatsManager.Instance.timer)
+            {
+                yield return null;
+            }
+            MCL = StartCoroutine(MusicCheckLoop());
+        }
+
+        private IEnumerator MusicCheckLoop()
+        {
+            while (true)
+            {
+                if (!Source.isPlaying)
+                {
+                    if (StatsManager.Instance.timer)
+                    {
+                        Source.PlayOneShot(RandomClip());
+                    }
+                    else
+                    {
+                        yield break;
+                    }
+                    yield return null;
+                }
+                else
+                {
+                    yield return null;
+                }
+            }
+        }
+
+        public class CGMusicPatches
+        {
+            [HarmonyPatch(typeof(ActivateOnSoundEnd), nameof(ActivateOnSoundEnd.Start)), HarmonyPrefix]
+            private static void DestroyOriginalSong(ActivateOnSoundEnd __instance)
+            {
+                if (SceneManager.GetActiveScene().name == "Endless" && __instance.name == "Intro")
+                {
+                    Destroy(__instance.gameObject);
+                }
+            }
+        }
+    }
+}
