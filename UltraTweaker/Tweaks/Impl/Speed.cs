@@ -35,12 +35,21 @@ namespace UltraTweaker.Tweaks.Impl
         public override void OnTweakEnabled()
         {
             base.OnTweakEnabled();
+            if (NewMovement.Instance != null)
+            {
+                StartSpeed = NewMovement.Instance.walkSpeed;
+                NewMovement.Instance.walkSpeed = StartSpeed * GetInstance<Speed>().Subsettings["player_speed_mult"].GetValue<float>();
+            }
             harmony.PatchAll(typeof(SpeedPatches));
         }
 
         public override void OnTweakDisabled()
         {
             base.OnTweakDisabled();
+            if (NewMovement.Instance != null)
+            {
+                NewMovement.Instance.walkSpeed = StartSpeed;
+            }
             harmony.UnpatchSelf();
         }
 

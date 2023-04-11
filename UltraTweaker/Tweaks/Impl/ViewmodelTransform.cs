@@ -58,6 +58,11 @@ namespace UltraTweaker.Tweaks.Impl
                 GunControl.Instance.GetComponent<RotateToFaceFrustumTarget>().enabled = true;
             }
 
+            foreach (GameObject go in originalScale.Keys)
+            {
+                go.transform.localScale = originalScale[go];
+            }
+
             originalScale.Clear();
         }
 
