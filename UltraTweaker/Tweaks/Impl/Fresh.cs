@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace UltraTweaker.Tweaks.Impl
 {
-    [TweakMetadata("Fresh", $"{UltraTweaker.GUID}.mutator_fresh", "Hurts you if you're not stylish.", $"{UltraTweaker.GUID}.mutators", 3, "Fresh", true, true)]
+    [TweakMetadata("Fresh", $"{UltraTweaker.GUID}.mutator_fresh", "Hurts you if you're not stylish.", $"{UltraTweaker.GUID}.mutators", 4, "Fresh", true, true)]
     public class Fresh : Tweak
     {
         private float ToRemove = 0;

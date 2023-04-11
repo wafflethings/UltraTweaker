@@ -9,7 +9,7 @@ using UnityEngine.AI;
 
 namespace UltraTweaker.Tweaks.Impl
 {
-    [TweakMetadata("Speed", $"{UltraTweaker.GUID}.mutator_speed", "Speed up yourself, and enemies", $"{UltraTweaker.GUID}.mutators", 8, "Speed", false, true)]
+    [TweakMetadata("Speed", $"{UltraTweaker.GUID}.mutator_speed", "Speed up yourself, and enemies", $"{UltraTweaker.GUID}.mutators", 9, "Speed", false, true)]
     public class Speed : Tweak
     {
         private Harmony harmony = new($"{UltraTweaker.GUID}.mutator_speed");

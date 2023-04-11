@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace UltraTweaker.Tweaks.Impl
 {
-    [TweakMetadata("Ultrahot", $"{UltraTweaker.GUID}.mutator_ultrahot", "Time moves when you move.", $"{UltraTweaker.GUID}.mutators", 11, "Ultrahot", false, true)]
+    [TweakMetadata("Ultrahot", $"{UltraTweaker.GUID}.mutator_ultrahot", "Time moves when you move.", $"{UltraTweaker.GUID}.mutators", 12, "Ultrahot", false, true)]
     public class Ultrahot : Tweak
     {
         public override void OnTweakEnabled()

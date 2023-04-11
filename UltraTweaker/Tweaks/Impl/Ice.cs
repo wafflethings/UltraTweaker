@@ -5,7 +5,7 @@ using System.Text;
 
 namespace UltraTweaker.Tweaks.Impl
 {
-    [TweakMetadata("Ice", $"{UltraTweaker.GUID}.mutator_ice", "Become slippery.", $"{UltraTweaker.GUID}.mutators", 5, "Ice", false, true)]
+    [TweakMetadata("Ice", $"{UltraTweaker.GUID}.mutator_ice", "Become slippery.", $"{UltraTweaker.GUID}.mutators", 6, "Ice", false, true)]
     public class Ice : Tweak
     {
         private Harmony harmony = new($"{UltraTweaker.GUID}.mutator_ice");

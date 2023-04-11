@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 namespace UltraTweaker.Tweaks.Impl
 {
-    [TweakMetadata("Mitosis", $"{UltraTweaker.GUID}.mutator_mitosis", "Duplicates enemies.", $"{UltraTweaker.GUID}.mutators", 6, "Mitosis", false, true)]
+    [TweakMetadata("Mitosis", $"{UltraTweaker.GUID}.mutator_mitosis", "Duplicates enemies.", $"{UltraTweaker.GUID}.mutators", 7, "Mitosis", false, true)]
     public class Mitosis : Tweak
     {
         private Harmony harmony = new($"{UltraTweaker.GUID}.mutator_mitosis");

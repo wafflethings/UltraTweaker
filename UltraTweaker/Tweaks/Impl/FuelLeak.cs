@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace UltraTweaker.Tweaks.Impl
 {
-    [TweakMetadata("Fuel Leak", $"{UltraTweaker.GUID}.mutator_fresh", "Lose health over time.", $"{UltraTweaker.GUID}.mutators", 4, "Leak", true, true)]
+    [TweakMetadata("Fuel Leak", $"{UltraTweaker.GUID}.mutator_fresh", "Lose health over time.", $"{UltraTweaker.GUID}.mutators", 5, "Leak", true, true)]
     public class FuelLeak : Tweak
     {
         private float ToRemove = 0;

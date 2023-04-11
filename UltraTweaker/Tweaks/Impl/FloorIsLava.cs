@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace UltraTweaker.Tweaks.Impl
 {
-    [TweakMetadata("Floor Is Lava", $"{UltraTweaker.GUID}.mutator_floor_is_lava", "Take damage when on the floor.", $"{UltraTweaker.GUID}.mutators", 1, "Lava", true, true)]
+    [TweakMetadata("Floor Is Lava", $"{UltraTweaker.GUID}.mutator_floor_is_lava", "Take damage when on the floor.", $"{UltraTweaker.GUID}.mutators", 2, "Lava", true, true)]
     public class FloorIsLava : Tweak
     {
         private float ToRemove = 0;

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace UltraTweaker.Tweaks.Impl
 {
-    [TweakMetadata("Tankify", $"{UltraTweaker.GUID}.mutator_tankify", "Change enemy health.", $"{UltraTweaker.GUID}.mutators", 10, "Tankify", false, true)]
+    [TweakMetadata("Tankify", $"{UltraTweaker.GUID}.mutator_tankify", "Change enemy health.", $"{UltraTweaker.GUID}.mutators", 11, "Tankify", false, true)]
     public class Tankify : Tweak
     {
         private Harmony harmony = new($"{UltraTweaker.GUID}.mutator_tankify");

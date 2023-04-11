@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace UltraTweaker.Tweaks.Impl
 {
-    [TweakMetadata("Submerged", $"{UltraTweaker.GUID}.mutator_submerged", "Everything is underwater.", $"{UltraTweaker.GUID}.mutators", 9, "Submerged", false, true)]
+    [TweakMetadata("Submerged", $"{UltraTweaker.GUID}.mutator_submerged", "Everything is underwater.", $"{UltraTweaker.GUID}.mutators", 10, "Submerged", false, true)]
     public class Submerged : Tweak
     {
         private Harmony harmony = new($"{UltraTweaker.GUID}.mutator_submerged");

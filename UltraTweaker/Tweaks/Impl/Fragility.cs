@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace UltraTweaker.Tweaks.Impl
 {
-    [TweakMetadata("Fragility", $"{UltraTweaker.GUID}.mutator_fragility", "Change your max health.", $"{UltraTweaker.GUID}.mutators", 2, "Fragility", true, true)]
+    [TweakMetadata("Fragility", $"{UltraTweaker.GUID}.mutator_fragility", "Change your max health.", $"{UltraTweaker.GUID}.mutators", 3, "Fragility", true, true)]
     public class Fragility : Tweak
     {
         private Harmony harmony = new($"{UltraTweaker.GUID}.mutator_fragility");
