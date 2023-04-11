@@ -20,7 +20,8 @@ namespace UltraTweaker.Handlers
             "look at this cat https://youtu.be/RL6-etT59w4",
             "holy shit look at this cat https://youtu.be/4BrQGoEJNaU",
             ":3 https://youtu.be/fUza3qYpw8Q",
-            "maow https://www.youtu.be/s1TsnnqgkoY"
+            "maow https://www.youtu.be/s1TsnnqgkoY",
+            "low quality cat https://youtu.be/1WB4szOdUBM"
         };
 
         public static void SaveData()
