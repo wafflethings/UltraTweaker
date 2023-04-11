@@ -29,6 +29,7 @@ namespace UltraTweaker.Tweaks.Impl
         {
             base.OnTweakDisabled();
             harmony.UnpatchSelf();
+            NewMovement.Instance.modForcedFrictionMultip = 1;
         }
 
         public override void OnSubsettingUpdate()

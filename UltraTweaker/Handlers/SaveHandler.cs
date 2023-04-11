@@ -32,7 +32,10 @@ namespace UltraTweaker.Handlers
                 data += $"Tweak: {meta.ID}|{UltraTweaker.AllTweaks[t].IsEnabled}\n";
                 foreach (Subsetting sub in UltraTweaker.AllTweaks[t].Subsettings.Values)
                 {
-                    data += $"Subsetting: {sub.metadata.ID}|{sub.Serialize()}\n";
+                    if (sub.Serialize() != "")
+                    {
+                        data += $"Subsetting: {sub.metadata.ID}|{sub.Serialize()}\n";
+                    }
                 }
             }
 

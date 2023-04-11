@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using UltraTweaker.Handlers;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace UltraTweaker.Tweaks.Impl
 {
@@ -59,14 +60,21 @@ namespace UltraTweaker.Tweaks.Impl
             {
                 if (!Immunity && (col.gameObject.layer == 8 || col.gameObject.layer == 24) && (col.gameObject.CompareTag("Floor") || col.gameObject.CompareTag("Moving")))
                 {
-                    if (Stored <= -30)
+                    if (Stored <= -40 && (!NewMovement.Instance.stillHolding || NewMovement.Instance.boostCharge <= 100f))
                     {
-                        float damage = (-(int)Stored / 1.5f) - 10;
+                        float damage = (-(int)Stored);
 
                         LastCrunch = Instantiate(CrunchSound, NewMovement.Instance.transform.position, Quaternion.identity, transform);
-                        LastCrunch.GetComponent<AudioSource>().volume = -(Stored / 100);
+                        LastCrunch.GetComponent<AudioSource>().volume = 0.2f -(Stored / 100);
+
+                        if (SceneManager.GetActiveScene().name == "Level 4-4" && damage >= 100)
+                        {
+                            damage = 99;
+                        }
+
                         NewMovement.Instance.GetHurt((int)damage, false, 0, false, true);
                         Invoke("DestroyCrunch", 2f);
+                        CameraController.Instance.CameraShake(damage / 30);
                     }
                 }
             }

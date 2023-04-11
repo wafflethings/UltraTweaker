@@ -339,6 +339,45 @@ namespace UltraTweaker.Tweaks
         }
     }
 
+    public class CommentSubsettingElement : SubsettingUIElement
+    {
+        public static GameObject baseSetting;
+        public GameObject currentSetting;
+
+        public override GameObject Create(Transform t)
+        {
+            if (baseSetting == null)
+            {
+                baseSetting = AssetHandler.Bundle.LoadAsset<GameObject>("Comment Subsetting.prefab");
+            }
+
+            currentSetting = GameObject.Instantiate(baseSetting, t);
+            currentSetting.ChildByName("Text").GetComponent<Text>().text = subsetting.metadata.Name.ToUpper();
+            currentSetting.ChildByName("Comment").GetComponent<Text>().text = subsetting.metadata.Description;
+
+            GameObject actionBtn = currentSetting.ChildByName("Button");
+            actionBtn.SetActive(false);
+
+            CommentSubsetting cs = (subsetting as CommentSubsetting);
+            if (cs != null)
+            {
+                if (cs.act != null)
+                {
+                    actionBtn.SetActive(true);
+                    actionBtn.GetComponent<Button>().onClick.AddListener(() => cs.act.Invoke());
+                    actionBtn.ChildByName("Text").GetComponent<Text>().text = cs.btnText;
+                }
+            }
+
+            return currentSetting;
+        }
+
+        public override void SetControlsActive(bool active)
+        {
+            //
+        }
+    }
+
     public class ShowBoxOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         public GameObject Box;

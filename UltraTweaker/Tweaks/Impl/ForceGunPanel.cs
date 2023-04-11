@@ -44,6 +44,15 @@ namespace UltraTweaker.Tweaks.Impl
                     __instance.gunPanel[0].SetActive(true);
                 }
             }
+
+            [HarmonyPatch(typeof(GunSetter), nameof(GunSetter.ResetWeapons)), HarmonyPostfix]
+            private static void PatchGunPanelSetter(GunSetter __instance)
+            {
+                if (IsGameplayScene())
+                {
+                    GunControl.Instance.gunPanel[0].SetActive(true);
+                }
+            }
         }
     }
 }

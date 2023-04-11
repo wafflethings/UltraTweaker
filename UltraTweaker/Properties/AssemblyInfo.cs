@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("UltraTweaker")]
-[assembly: AssemblyDescription("An ULTRAKILL mod that adds new settings and mutators.")]
+[assembly: AssemblyDescription("An extensible ULTRAKILL mod which adds extra settings, and mutators.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Waffle")]
 [assembly: AssemblyProduct("UltraTweaker")]

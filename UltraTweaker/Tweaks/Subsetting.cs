@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using UnityEngine;
 
@@ -50,6 +51,22 @@ namespace UltraTweaker.Tweaks
         public override void ResetValue()
         {
             value = defaultValue;
+        }
+    }
+
+    public class CommentSubsetting : TypedSubsetting<string>
+    {
+        public Action act;
+        public string btnText;
+        public CommentSubsetting(Tweak parent, Metadata metadata, SubsettingUIElement element, Action act = null, string btnText = "") : base(parent, metadata, element)
+        {
+            this.act = act;
+            this.btnText = btnText;
+        }
+
+        public override string Serialize()
+        {
+            return "";
         }
     }
 

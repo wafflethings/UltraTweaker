@@ -49,9 +49,9 @@
             <param name="Description">Text that appears when you hover on the option name.</param>
             <param name="PageId">Which page should the tweak be on?</param>
             <param name="InsertAt">What position on the page it is inserted at.</param>
-            <param name="IconName">The name of the icon. This will only load from UT's main bundle.</param>
+            <param name="IconName">The name of the icon. Make sure to cache it with <see cref="M:UltraTweaker.Handlers.AssetHandler.CacheAsset``1(System.String,UnityEngine.AssetBundle)"/></param>
             <param name="AllowCG">Should this tweak disable The Cyber Grind?</param>
-            <param name="ShowOnEndScreen">Should the tweak appear on the end screen?</param>
+            <param name="IsMutator">Is the tweak a mutator? It will show in the end screen,</param>
         </member>
         <member name="T:UltraTweaker.Tweaks.Tweak">
             <summary>
@@ -87,6 +87,11 @@
             <summary>
             True if the current scene has gameplay.
             This means not the Main Menu, any intermission, or 2-S.
+            </summary>
+        </member>
+        <member name="M:UltraTweaker.Tweaks.Tweak.SetControls(System.Boolean)">
+            <summary>
+            Enables or disables all the controls for the tweak.
             </summary>
         </member>
     </members>

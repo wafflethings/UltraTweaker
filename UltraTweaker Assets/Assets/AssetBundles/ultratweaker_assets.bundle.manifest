@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3553369334
+CRC: 1960657819
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 29bfff77508ea424f178ba0f1150028a
+    Hash: 99b3d6c5f5e4d28b5fb0d598d97b534d
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 07d5369adc24e5254e96eaa7dc71b161
+    Hash: 0a48794e1cc7b436e882fdba69dd543b
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -36,13 +36,13 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 2a4db7a114972834c8e4117be1d82ba3, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
 - Class: 114
@@ -92,6 +92,7 @@ Assets:
 - Assets/Mutator Icons/Speed.png
 - Assets/Stat Panels/All Panels.prefab
 - Assets/Settings Menu/Settings Menu.prefab
+- Assets/Settings Menu/Elements/Subsetting/Comment Subsetting.prefab
 - Assets/Dice Roll/Dice.prefab
 - Assets/Settings Menu/Page Button.prefab
 - Assets/CG Utils/Cybergrind Stats.prefab

@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using UnityEngine;
@@ -23,7 +24,38 @@ namespace UltraTweaker.Tweaks.Impl
 
         public Coroutine MCL;
 
-        public override void OnTweakEnabled()
+        public CGMusic()
+        {
+            string ModifiedPath = MusicPath;
+
+            if (ModifiedPath.Contains(@"AppData\Roaming"))
+            {
+                ModifiedPath = ModifiedPath.Substring(ModifiedPath.IndexOf(@"AppData\Roaming") + @"AppData\Roaming".Length);
+                ModifiedPath = @"%appdata%\" + ModifiedPath;
+            } 
+            else if (ModifiedPath.Contains(PathUtils.GameDirectory()))
+            {
+                ModifiedPath = ModifiedPath.Replace(PathUtils.GameDirectory(), "ULTRAKILL");
+            }
+
+            Subsettings = new()
+            {
+                { "path", new CommentSubsetting(this, new Metadata("Path", "path", ModifiedPath), new CommentSubsettingElement(), OpenFolder, "OPEN") }
+            };
+        }
+
+        public void OpenFolder()
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                Arguments = MusicPath,
+                FileName = "explorer.exe"
+            };
+
+            Process.Start(startInfo);
+        }
+
+    public override void OnTweakEnabled()
         {
             base.OnTweakEnabled();
             harmony.PatchAll(typeof(CGMusicPatches));
