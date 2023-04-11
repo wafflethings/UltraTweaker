@@ -108,6 +108,9 @@ namespace UltraTweaker.Tweaks.Impl
                     if (activeAmount == 0)
                     {
                         row.SetActive(false);
+                    } else
+                    {
+                        row.SetActive(true);
                     }
                 }
 

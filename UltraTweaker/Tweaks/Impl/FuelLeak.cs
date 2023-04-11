@@ -31,7 +31,7 @@ namespace UltraTweaker.Tweaks.Impl
                     ToRemove -= (int)ToRemove;
                 }
 
-                if (NewMovement.Instance.hp <= 0)
+                if (NewMovement.Instance.hp <= 0 && !NewMovement.Instance.dead)
                 {
                     NewMovement.Instance.GetHurt(int.MaxValue, false, 1, true, true);
                 }
