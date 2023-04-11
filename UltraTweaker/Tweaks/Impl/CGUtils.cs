@@ -69,6 +69,8 @@ namespace UltraTweaker.Tweaks.Impl
             time.text = "00:00.000";
             kills.text = "0";
             style.text = "0";
+
+            panel.SetActive(false);
         }
 
         public void Update()
