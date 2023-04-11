@@ -23,7 +23,7 @@ namespace UltraTweaker.Tweaks
             this.tweak = tweak;
         }
 
-        public virtual GameObject Create(Transform t)
+        public GameObject Create(Transform t)
         {
             if (baseSetting == null)
             {
@@ -71,34 +71,19 @@ namespace UltraTweaker.Tweaks
 
             return currentSetting;
         }
+
+        public void SetControlsActive(bool active)
+        {
+            toggle.interactable = active;
+        }
     }
-
-    /* public class MutatorUIElement : TweakUIElement
-    {
-        public override string Name => "Mutator Setting.prefab";
-        public Sprite icon;
-
-        public MutatorUIElement(Tweak tweak, string iconName) : base(tweak)
-        {
-            if (icon == null)
-            {
-                icon = AssetHandler.Bundle.LoadAsset<Sprite>(iconName);
-            }
-        }
-
-        public override GameObject Create(Transform t)
-        {
-            GameObject og = base.Create(t);
-            og.ChildByName("Image").GetComponent<Image>().sprite = icon;
-            return og;
-        }
-    } */
 
     public abstract class SubsettingUIElement
     {
         public Subsetting subsetting;
 
         public abstract GameObject Create(Transform t);
+        public abstract void SetControlsActive(bool active);
     }
 
     public class SliderFloatSubsettingElement : SubsettingUIElement
@@ -174,6 +159,12 @@ namespace UltraTweaker.Tweaks
             });
 
             return currentSetting;
+        }
+
+        public override void SetControlsActive(bool active)
+        {
+            slider.interactable = active;
+            inputField.interactable = active;
         }
     }
 
@@ -252,6 +243,12 @@ namespace UltraTweaker.Tweaks
 
             return currentSetting;
         }
+
+        public override void SetControlsActive(bool active)
+        {
+            slider.interactable = active;
+            inputField.interactable = active;
+        }
     }
 
     public class BoolSubsettingElement : SubsettingUIElement
@@ -286,6 +283,11 @@ namespace UltraTweaker.Tweaks
             });
 
             return currentSetting;
+        }
+
+        public override void SetControlsActive(bool active)
+        {
+            toggle.interactable = active;
         }
     }
 
@@ -329,6 +331,11 @@ namespace UltraTweaker.Tweaks
             });
 
             return currentSetting;
+        }
+
+        public override void SetControlsActive(bool active)
+        {
+            dropdown.interactable = active;
         }
     }
 

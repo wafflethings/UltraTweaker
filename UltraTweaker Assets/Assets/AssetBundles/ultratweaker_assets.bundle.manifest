@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3544524078
+CRC: 3553369334
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e2216220f675195f0db087a37e6c909e
+    Hash: 29bfff77508ea424f178ba0f1150028a
   TypeTreeHash:
     serializedVersion: 2
-    Hash: ce7dc51e0370e7bc414395eed7ea40dd
+    Hash: 07d5369adc24e5254e96eaa7dc71b161
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -24,6 +24,10 @@ ClassTypes:
 - Class: 43
   Script: {instanceID: 0}
 - Class: 48
+  Script: {instanceID: 0}
+- Class: 82
+  Script: {instanceID: 0}
+- Class: 83
   Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
@@ -75,12 +79,14 @@ Assets:
 - Assets/Settings Menu/Elements/Subsetting/Dropdown Subsetting.prefab
 - Assets/Settings Menu/Elements/Subsetting/Toggle Subsetting.prefab
 - Assets/Settings Menu/Elements/Tweak Setting.prefab
+- Assets/Mutator Icons/Bone.png
 - Assets/Settings Menu/Settings Page.prefab
 - Assets/Mutator Icons/Mitosis.png
 - Assets/Settings Menu/Assets/speech.png
 - Assets/Mutator Icons/Submerged.png
 - Assets/Settings Menu/Elements/Subsetting/Slider Subsetting.prefab
 - Assets/Mutator Icons/Leak.png
+- Assets/Fall Damage/CrunchSound.prefab
 - Assets/Settings Menu/Assets/pip.png
 - Assets/Mutator Icons/Fresh.png
 - Assets/Mutator Icons/Speed.png

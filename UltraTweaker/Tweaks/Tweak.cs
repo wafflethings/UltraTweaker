@@ -165,5 +165,18 @@ namespace UltraTweaker.Tweaks
 
             return !NonGameplay.Contains(SceneManager.GetActiveScene().name);
         }
+
+        /// <summary>
+        /// Enables or disables all the controls for the tweak.
+        /// </summary>
+        public void SetControls(bool active)
+        {
+            element.SetControlsActive(active);
+
+            foreach (Subsetting sub in Subsettings.Values)
+            {
+                sub.element.SetControlsActive(active);
+            }
+        }
     }
 }

@@ -35,11 +35,6 @@ namespace UltraTweaker.Tweaks.Impl
             harmony.UnpatchSelf();
         }
 
-        public override void OnSubsettingUpdate()
-        {
-            SceneHelper.LoadScene(SceneManager.GetActiveScene().name);
-        }
-
         public override void OnSceneLoad(Scene scene, LoadSceneMode mode)
         {
             alreadyMultiplied.Clear();

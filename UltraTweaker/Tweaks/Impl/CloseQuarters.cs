@@ -34,8 +34,7 @@ namespace UltraTweaker.Tweaks.Impl
 
         public static class DistancePatches
         {
-            [HarmonyPatch(typeof(EnemyIdentifier), nameof(EnemyIdentifier.Awake))]
-            [HarmonyPostfix]
+            [HarmonyPatch(typeof(EnemyIdentifier), nameof(EnemyIdentifier.Awake)), HarmonyPostfix]
             public static void AddComp(EnemyIdentifier __instance)
             {
                 __instance.gameObject.AddComponent<BlessWhenFar>();

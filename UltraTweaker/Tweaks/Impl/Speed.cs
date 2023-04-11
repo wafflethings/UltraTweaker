@@ -13,6 +13,7 @@ namespace UltraTweaker.Tweaks.Impl
     public class Speed : Tweak
     {
         private Harmony harmony = new($"{UltraTweaker.GUID}.mutator_speed");
+        private static float StartSpeed = 0;
 
         public Speed()
         {
@@ -24,6 +25,11 @@ namespace UltraTweaker.Tweaks.Impl
                 { "enemy_speed_mult", new FloatSubsetting(this, new Metadata("Enemy Speed", "enemy_speed_mult", "Speed multiplier for the enemies."),
                     new SliderFloatSubsettingElement("{0}x"), 2, 10, 0) }
             };
+        }
+
+        public override void OnSubsettingUpdate()
+        {
+            NewMovement.Instance.walkSpeed = StartSpeed * Subsettings["player_speed_mult"].GetValue<float>();
         }
 
         public override void OnTweakEnabled()
@@ -43,7 +49,8 @@ namespace UltraTweaker.Tweaks.Impl
             [HarmonyPatch(typeof(NewMovement), nameof(NewMovement.Start)), HarmonyPostfix]
             public static void SpeedPlayer(NewMovement __instance)
             {
-                __instance.walkSpeed *= GetInstance<Speed>().Subsettings["player_speed_mult"].GetValue<float>();
+                StartSpeed = __instance.walkSpeed;
+                __instance.walkSpeed = StartSpeed * GetInstance<Speed>().Subsettings["player_speed_mult"].GetValue<float>();
             }
 
             [HarmonyPatch(typeof(EnemyIdentifier), nameof(EnemyIdentifier.Start)), HarmonyPostfix]

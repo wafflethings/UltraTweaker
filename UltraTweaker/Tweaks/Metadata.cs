@@ -37,7 +37,7 @@ namespace UltraTweaker.Tweaks
         public int InsertAt { get; private set; }
         public Sprite Icon { get; private set; }
         public bool AllowCG { get; private set; }
-        public bool ShowOnEndScreen { get; private set; }
+        public bool IsMutator { get; private set; }
 
         /// <summary>
         /// Tweak-specific metadata. Not for subsettings.
@@ -49,8 +49,8 @@ namespace UltraTweaker.Tweaks
         /// <param name="InsertAt">What position on the page it is inserted at.</param>
         /// <param name="IconName">The name of the icon. Make sure to cache it with <see cref="AssetHandler.CacheAsset{T}(string, AssetBundle)"/></param>
         /// <param name="AllowCG">Should this tweak disable The Cyber Grind?</param>
-        /// <param name="ShowOnEndScreen">Should the tweak appear on the end screen?</param>
-        public TweakMetadata(string Name, string ID, string Description = "", string PageId = $"{UltraTweaker.GUID}.misc", int InsertAt = 0, string IconName = null, bool AllowCG = true, bool ShowOnEndScreen = false) : base(Name, ID, Description)
+        /// <param name="IsMutator">Is the tweak a mutator? It will show in the end screen,</param>
+        public TweakMetadata(string Name, string ID, string Description = "", string PageId = $"{UltraTweaker.GUID}.misc", int InsertAt = 0, string IconName = null, bool AllowCG = true, bool IsMutator = false) : base(Name, ID, Description)
         {
             if (IconName != null)
             {
@@ -60,7 +60,7 @@ namespace UltraTweaker.Tweaks
             this.PageId = PageId;
             this.InsertAt = InsertAt;
             this.AllowCG = AllowCG;
-            this.ShowOnEndScreen = ShowOnEndScreen;
+            this.IsMutator = IsMutator;
         }
     }
 }

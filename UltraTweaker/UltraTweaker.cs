@@ -39,7 +39,7 @@ namespace UltraTweaker
             Tweak.CreateTweakHolder();
             SaveHandler.LoadData();
             SettingUIHandler.Patch();
-            FinalRankMutatorHandler.Patch();
+            MutatorHandler.Patch();
         }
 
         public void OnDestroy()

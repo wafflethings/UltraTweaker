@@ -31,6 +31,11 @@ namespace UltraTweaker.Tweaks.Impl
             harmony.UnpatchSelf();
         }
 
+        public override void OnSubsettingUpdate()
+        {
+            NewMovement.Instance.modForcedFrictionMultip = GetInstance<Ice>().Subsettings["slippyness"].GetValue<float>();
+        }
+
         public static class IcePatches
         {
             [HarmonyPatch(typeof(NewMovement), nameof(NewMovement.Start))]
