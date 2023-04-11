@@ -77,10 +77,13 @@ namespace UltraTweaker.Handlers
                     }
                 }
 
-                HudMessageReceiver.Instance.SendHudMessage(data);
-                HudMessageReceiver.Instance.text.resizeTextMaxSize = HudMessageReceiver.Instance.text.fontSize;
-                HudMessageReceiver.Instance.text.resizeTextMinSize = 8;
-                HudMessageReceiver.Instance.text.resizeTextForBestFit = true;
+                if (data != "")
+                {
+                    HudMessageReceiver.Instance.SendHudMessage(data);
+                    HudMessageReceiver.Instance.text.resizeTextMaxSize = HudMessageReceiver.Instance.text.fontSize;
+                    HudMessageReceiver.Instance.text.resizeTextMinSize = 8;
+                    HudMessageReceiver.Instance.text.resizeTextForBestFit = true;
+                }
             }
 
             [HarmonyPatch(typeof(StatsManager), nameof(StatsManager.StartTimer)), HarmonyPostfix]
