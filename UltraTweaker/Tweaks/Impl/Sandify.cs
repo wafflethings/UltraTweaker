@@ -8,10 +8,10 @@ using UnityEngine;
 
 namespace UltraTweaker.Tweaks.Impl
 {
-    [TweakMetadata("Sandify", $"{UltraTweaker.GUID}.mutator_sandify", "Change your max health.", $"{UltraTweaker.GUID}.mutators", 8, "Sandify", true, true)]
+    [TweakMetadata("Sandify", $"{UltraTweaker.GUID}.mutator_sandify", "Cover enemies in sand.", $"{UltraTweaker.GUID}.mutators", 8, "Sandify", true, true)]
     public class Sandify : Tweak
     {
-        private Harmony harmony = new($"{UltraTweaker.GUID}.mutator_submerged");
+        private Harmony harmony = new($"{UltraTweaker.GUID}.mutator_sandify");
 
         public override void OnTweakEnabled()
         {

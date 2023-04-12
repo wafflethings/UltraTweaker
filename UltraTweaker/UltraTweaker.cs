@@ -16,7 +16,7 @@ namespace UltraTweaker
     {
         public const string GUID = "waffle.ultrakill.ultratweaker";
         public const string Name = "UltraTweaker";
-        public const string Version = "1.0.2";
+        public const string Version = "1.0.3";
        
         public static Dictionary<Type, Tweak> AllTweaks = new();
         internal static List<Assembly> AssembliesToCheck = new()
