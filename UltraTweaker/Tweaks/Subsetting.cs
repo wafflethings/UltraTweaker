@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using UnityEngine;
@@ -105,7 +106,7 @@ namespace UltraTweaker.Tweaks
 
         public override void Deserialize(string str)
         {
-            value = Convert.ToInt32(str);
+            value = int.Parse(str, CultureInfo.GetCultureInfo("en-GB"));
         }
 
         public override string Serialize()
@@ -130,7 +131,7 @@ namespace UltraTweaker.Tweaks
 
         public override void Deserialize(string str)
         {
-            value = float.Parse(str);
+            value = float.Parse(str, CultureInfo.GetCultureInfo("en-GB"));
         }
 
         public override string Serialize()

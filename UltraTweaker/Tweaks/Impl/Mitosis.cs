@@ -47,13 +47,13 @@ namespace UltraTweaker.Tweaks.Impl
             {
                 if (!__instance.gameObject.name.Contains("(MITOSISED)"))
                 {
-
                     for (int i = 0; i < GetInstance<Mitosis>().Subsettings["enemy_amount"].GetValue<int>() - 1; i++)
                     {
                         GameObject obj = Instantiate(__instance.gameObject, __instance.transform.parent);
 
                         obj.name = __instance.gameObject.name + "(MITOSISED)";
                         obj.transform.position = __instance.transform.position;
+                        obj.GetComponent<EnemyIdentifier>().blessed = false;
                     }
                 }
             }
@@ -61,7 +61,18 @@ namespace UltraTweaker.Tweaks.Impl
             [HarmonyPatch(typeof(ActivateNextWave), nameof(ActivateNextWave.Awake)), HarmonyPostfix]
             public static void IncreaseAnw(ActivateNextWave __instance)
             {
-                __instance.enemyCount *= GetInstance<Mitosis>().Subsettings["enemy_amount"].GetValue<int>();
+                Debug.Log($"{__instance.enemyCount} | {__instance.gameObject.GetComponentInParent<GoreZone>().transform.parent.gameObject.name} / {__instance.gameObject.GetComponentInParent<GoreZone>().name} / {__instance.gameObject.name}");
+                if (__instance.gameObject.GetComponentInParent<GoreZone>().name.Contains("(Clone)"))
+                {
+                    __instance.enemyCount *= GetInstance<Mitosis>().Subsettings["enemy_amount"].GetValue<int>();
+
+                    foreach (DeathMarker deathMarker in __instance.gameObject.GetComponentsInChildren<DeathMarker>(true))
+                    {
+                        __instance.enemyCount -= 1;
+                    }
+
+                    Debug.Log($"{__instance.enemyCount} | Whar?");
+                }
             }
         }
     }

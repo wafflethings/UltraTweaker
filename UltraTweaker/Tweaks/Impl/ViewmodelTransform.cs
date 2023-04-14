@@ -114,11 +114,13 @@ namespace UltraTweaker.Tweaks.Impl
                 {
                     float size = GetInstance<ViewmodelTransform>().Subsettings["viewmodel_size_multiplier"].GetValue<int>();
 
-                    __instance.transform.localScale *=  size / 100f;
-                    if (size != 0)
-                    {
-                        __instance.gameObject.ChildByName("Projectile Parry Zone").transform.localScale /= size / 100f;
-                    }
+                    // this breaks parries help idk why 
+
+                    //__instance.transform.localScale *=  size / 100f;
+                    //if (size != 0)
+                    //{
+                    //    __instance.gameObject.ChildByName("Projectile Parry Zone").transform.localScale /= size / 100f;
+                    //}
                 }
             }
 

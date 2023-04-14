@@ -116,11 +116,22 @@ namespace UltraTweaker
         private EnemyIdentifier eid;
         private DoubleRender[] dr;
 
+        public void Start()
+        {
+            eid = null;
+            dr = null;
+        }
+
         public void Update()
         {
             if (dr == null)
             {
                 dr = GetComponentsInChildren<DoubleRender>(true);
+            }
+
+            if (dr.Length == 0)
+            {
+                Destroy(this);
             }
 
             if (eid == null)
