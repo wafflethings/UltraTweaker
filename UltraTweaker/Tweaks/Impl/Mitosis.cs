@@ -62,7 +62,7 @@ namespace UltraTweaker.Tweaks.Impl
             public static void IncreaseAnw(ActivateNextWave __instance)
             {
                 Debug.Log($"{__instance.enemyCount} | {__instance.gameObject.GetComponentInParent<GoreZone>().transform.parent.gameObject.name} / {__instance.gameObject.GetComponentInParent<GoreZone>().name} / {__instance.gameObject.name}");
-                if (__instance.gameObject.GetComponentInParent<GoreZone>().name.Contains("(Clone)"))
+                if (!__instance.gameObject.GetComponentInParent<GoreZone>().name.Contains("(Clone)"))
                 {
                     __instance.enemyCount *= GetInstance<Mitosis>().Subsettings["enemy_amount"].GetValue<int>();
 
