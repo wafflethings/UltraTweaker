@@ -60,19 +60,27 @@ namespace UltraTweaker.Tweaks.Impl
 
             [HarmonyPatch(typeof(ActivateNextWave), nameof(ActivateNextWave.Awake)), HarmonyPostfix]
             public static void IncreaseAnw(ActivateNextWave __instance)
-            {
-                Debug.Log($"{__instance.enemyCount} | {__instance.gameObject.GetComponentInParent<GoreZone>().transform.parent.gameObject.name} / {__instance.gameObject.GetComponentInParent<GoreZone>().name} / {__instance.gameObject.name}");
-                if (__instance.gameObject.GetComponentInParent<GoreZone>().name.Contains("(Clone)"))
+            {               
+                GoreZone goreZone = __instance.gameObject.GetComponentInParent<GoreZone>();
+                if (goreZone == null) //No gorezone? ,':^(
                 {
-                    __instance.enemyCount *= GetInstance<Mitosis>().Subsettings["enemy_amount"].GetValue<int>();
-
-                    foreach (DeathMarker deathMarker in __instance.gameObject.GetComponentsInChildren<DeathMarker>(true))
-                    {
-                        __instance.enemyCount -= 1;
-                    }
-
-                    Debug.Log($"{__instance.enemyCount} | Whar?");
+                    Debug.Log($"No GoreZone found in hierarchy of {__instance.gameObject.name}");
+                    return;    
                 }
+                    
+                Debug.Log($"{__instance.enemyCount} | {((goreZone.transform.parent == null) ? "orphan" : goreZone.transform.parent.name)} / {goreZone.transform.name} / {__instance.gameObject.name}");
+                
+                if (!goreZone.gameObject.name.Contains("(Clone)"))
+                    return;
+                    
+                __instance.enemyCount *= GetInstance<Mitosis>().Subsettings["enemy_amount"].GetValue<int>();
+
+                foreach (DeathMarker deathMarker in __instance.gameObject.GetComponentsInChildren<DeathMarker>(true))
+                {
+                    __instance.enemyCount -= 1;
+                }
+
+                Debug.Log($"{__instance.enemyCount} | Whar?");        
             }
         }
     }
