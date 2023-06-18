@@ -163,7 +163,7 @@ namespace UltraTweaker.Tweaks
                 "Intermission2"
             };
 
-            return !NonGameplay.Contains(SceneManager.GetActiveScene().name);
+            return !NonGameplay.Contains(SceneHelper.CurrentScene);
         }
 
         /// <summary>

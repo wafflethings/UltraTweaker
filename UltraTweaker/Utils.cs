@@ -126,31 +126,17 @@ namespace UltraTweaker
         {
             if (dr == null)
             {
-                dr = GetComponentsInChildren<DoubleRender>(true);
-            }
-
-            if (dr.Length == 0)
-            {
-                Destroy(this);
-            }
-
-            if (eid == null)
-            {
-                eid = GetComponent<EnemyIdentifier>();
-            }
-
-            if (eid.dead)
-            {
-                Destroy(this);
-            }
-            else
-            {
-                if (dr != null && dr.Length > 0)
+                if (dr == null)
                 {
-                    foreach (DoubleRender dr_ in dr)
-                    {
-                        dr_.enabled = false;
-                    }
+                    dr = GetComponentsInChildren<DoubleRender>(true);
+                }
+            }
+
+            if (dr != null && dr.Length > 0)
+            {
+                foreach (DoubleRender dr_ in dr)
+                {
+                    dr_.currentCam.RemoveCommandBuffer(UnityEngine.Rendering.CameraEvent.BeforeForwardAlpha, dr_.cb);
                 }
             }
         }

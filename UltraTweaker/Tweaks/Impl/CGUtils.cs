@@ -30,7 +30,7 @@ namespace UltraTweaker.Tweaks.Impl
         public override void OnTweakEnabled()
         {
             base.OnTweakEnabled();
-            if (SceneManager.GetActiveScene().name == "Endless")
+            if (SceneHelper.CurrentScene == "Endless")
             {
                 Create();
             }
@@ -75,7 +75,7 @@ namespace UltraTweaker.Tweaks.Impl
 
         public void Update()
         {
-            if (SceneManager.GetActiveScene().name == "Endless")
+            if (SceneHelper.CurrentScene == "Endless" && lse != null)
             {
                 if (!lse.gameObject.activeSelf)
                 {
@@ -109,7 +109,7 @@ namespace UltraTweaker.Tweaks.Impl
 
         public override void OnSceneLoad(Scene scene, LoadSceneMode mode)
         {
-            if (SceneManager.GetActiveScene().name == "Endless")
+            if (SceneHelper.CurrentScene == "Endless")
             {
                 Create();
             }
