@@ -19,7 +19,9 @@ namespace UltraTweaker.Handlers
 
         public class MutatorPatches
         {
-            [HarmonyPatch(typeof(SteamController), nameof(SteamController.SubmitCyberGrindScore)), HarmonyPrefix]
+            [HarmonyPatch(typeof(LeaderboardController), nameof(LeaderboardController.SubmitCyberGrindScore))]
+            [HarmonyPatch(typeof(LeaderboardController), nameof(LeaderboardController.SubmitLevelScore))]
+            [HarmonyPrefix]
             public static bool DisableCG()
             {
                 foreach (Tweak tw in UltraTweaker.AllTweaks.Values)

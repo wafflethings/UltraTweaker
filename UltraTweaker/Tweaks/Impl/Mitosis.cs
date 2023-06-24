@@ -69,10 +69,10 @@ namespace UltraTweaker.Tweaks.Impl
                 }
                     
                 Debug.Log($"{__instance.enemyCount} | {((goreZone.transform.parent == null) ? "orphan" : goreZone.transform.parent.name)} / {goreZone.transform.name} / {__instance.gameObject.name}");
-                
+
                 if (!goreZone.gameObject.name.Contains("(Clone)"))
                     return;
-                    
+
                 __instance.enemyCount *= GetInstance<Mitosis>().Subsettings["enemy_amount"].GetValue<int>();
 
                 foreach (DeathMarker deathMarker in __instance.gameObject.GetComponentsInChildren<DeathMarker>(true))

@@ -40,8 +40,17 @@ namespace UltraTweaker.Tweaks.Impl
             [HarmonyPatch(typeof(EnemyIdentifier), nameof(EnemyIdentifier.Start)), HarmonyPostfix]
             public static void IncreaseHealth(EnemyIdentifier __instance)
             {
-                __instance.HealthBuff(GetInstance<Tankify>().Subsettings["multiplier"].GetValue<float>());
-                __instance.gameObject.AddComponent<DisableDoubleRender>();
+                float mult = GetInstance<Tankify>().Subsettings["multiplier"].GetValue<float>();
+
+                if (!__instance.healthBuff)
+                {
+                    __instance.gameObject.AddComponent<DisableDoubleRender>();
+                    __instance.HealthBuff(mult);
+                }
+                else
+                {
+                    __instance.healthBuffModifier *= mult;
+                }
             }
         }
     }

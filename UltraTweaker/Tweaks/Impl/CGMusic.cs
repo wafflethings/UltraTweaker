@@ -74,7 +74,7 @@ namespace UltraTweaker.Tweaks.Impl
                 StopCoroutine(MCL);
             }
 
-            if (SceneManager.GetActiveScene().name == "Endless")
+            if (SceneHelper.CurrentScene == "Endless")
             {
                 MusicPool = new();
                 Music = GetClipsFromFolder();
@@ -166,11 +166,12 @@ namespace UltraTweaker.Tweaks.Impl
 
         public class CGMusicPatches
         {
-            [HarmonyPatch(typeof(ActivateOnSoundEnd), nameof(ActivateOnSoundEnd.Start)), HarmonyPrefix]
-            private static void DestroyOriginalSong(ActivateOnSoundEnd __instance)
+            [HarmonyPatch(typeof(CustomMusicPlayer), nameof(CustomMusicPlayer.OnEnable)), HarmonyPrefix]
+            private static void DestroyOriginalSong(CustomMusicPlayer __instance)
             {
-                if (SceneManager.GetActiveScene().name == "Endless" && __instance.name == "Intro")
+                if (SceneHelper.CurrentScene == "Endless")
                 {
+                    __instance.changer.muman.volume = 0;
                     Destroy(__instance.gameObject);
                 }
             }

@@ -65,8 +65,17 @@ namespace UltraTweaker.Tweaks.Impl
             [HarmonyPatch(typeof(EnemyIdentifier), nameof(EnemyIdentifier.Start)), HarmonyPostfix]
             public static void SpeedEnemy(EnemyIdentifier __instance)
             {
-                __instance.SpeedBuff(GetInstance<Speed>().Subsettings["enemy_speed_mult"].GetValue<float>());
-                __instance.gameObject.AddComponent<DisableDoubleRender>();
+                float mult = GetInstance<Speed>().Subsettings["enemy_speed_mult"].GetValue<float>();
+
+                if (!__instance.speedBuff)
+                {
+                    __instance.gameObject.AddComponent<DisableDoubleRender>();
+                    __instance.SpeedBuff(mult);
+                }
+                else
+                {
+                    __instance.speedBuffModifier *= mult;
+                }
             }
         }
     }
