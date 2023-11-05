@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UltraTweaker.Handlers;
+using UltraTweaker.Subsettings.Impl;
+using UltraTweaker.UIElements.Impl;
 
 namespace UltraTweaker.Tweaks.Impl
 {
@@ -14,23 +16,23 @@ namespace UltraTweaker.Tweaks.Impl
     {
         private Harmony harmony = new($"{UltraTweaker.GUID}.stat_panels");
 
-        private GameObject originalPanels;
-        private GameObject currentPanels;
+        private GameObject _originalPanels;
+        private GameObject _currentPanels;
 
-        private GameObject DPS;
-        private Text DPSText;
+        private GameObject _dps;
+        private Text _dpsText;
 
-        private GameObject Speed;
-        private Text SpeedText;
+        private GameObject _speed;
+        private Text _speedText;
 
-        private GameObject Info;
-        private Text HPText;
-        private Text StaminaText;
+        private GameObject _info;
+        private Text _hpText;
+        private Text _staminaText;
 
-        private GameObject Weapons;
-        private Image GunImage;
-        private Image PunchImage;
-        private Slider RailSlider;
+        private GameObject _weapons;
+        private Image _gunImage;
+        private Image _punchImage;
+        private Slider _railSlider;
 
         // All hits that have occured in the last second
         public static List<Hit> HitsSecond = new List<Hit>();
@@ -64,7 +66,7 @@ namespace UltraTweaker.Tweaks.Impl
                     new BoolSubsettingElement(), false)  },
 
                 { "speed_mode", new IntSubsetting(this, new("Speed: Mode", "speed_mode", "Should it show total speed, or speed in each direction?"),
-                    new DropdownSubsettingElement(new List<string>() { "(x) m/s", "(x, y, z) m/s"} ), 0, 1, 0)  },
+                    new DropdownIntSubsettingElement(new List<string>() { "(x) m/s", "(x, y, z) m/s"} ), 0, 1, 0)  },
 
                 { "size", new IntSubsetting(this, new("Size", "size", "How big the panels are."), 
                     new SliderIntSubsettingElement("{0}%"), 100, 200, 0) }
@@ -81,20 +83,20 @@ namespace UltraTweaker.Tweaks.Impl
         public override void OnTweakDisabled()
         {
             base.OnTweakDisabled();
-            Destroy(currentPanels);
+            Destroy(_currentPanels);
             harmony.UnpatchSelf();
         }
 
         public override void OnSubsettingUpdate()
         {
-            if (CanvasController.Instance != null && IsGameplayScene() && currentPanels != null)
+            if (CanvasController.Instance != null && IsGameplayScene() && _currentPanels != null)
             {
-                DPS.SetActive(Subsettings["dps"].GetValue<bool>());
-                Speed.SetActive(Subsettings["speed"].GetValue<bool>());
-                Info.SetActive(Subsettings["info"].GetValue<bool>());
-                Weapons.SetActive(Subsettings["weapons"].GetValue<bool>());
+                _dps.SetActive(Subsettings["dps"].GetValue<bool>());
+                _speed.SetActive(Subsettings["speed"].GetValue<bool>());
+                _info.SetActive(Subsettings["info"].GetValue<bool>());
+                _weapons.SetActive(Subsettings["weapons"].GetValue<bool>());
 
-                foreach (GameObject row in currentPanels.ChildrenList())
+                foreach (GameObject row in _currentPanels.ChildrenList())
                 {
                     int activeAmount = 0;
                     foreach (GameObject panel in row.ChildrenList())
@@ -114,8 +116,8 @@ namespace UltraTweaker.Tweaks.Impl
                     }
                 }
 
-                currentPanels.transform.SetAsFirstSibling();
-                currentPanels.transform.localScale = Vector3.one * Subsettings["size"].GetValue<int>() / 100f;
+                _currentPanels.transform.SetAsFirstSibling();
+                _currentPanels.transform.localScale = Vector3.one * Subsettings["size"].GetValue<int>() / 100f;
             }
         }
 
@@ -128,31 +130,31 @@ namespace UltraTweaker.Tweaks.Impl
         {
             if (CanvasController.Instance != null && IsGameplayScene())
             {
-                if (originalPanels == null)
+                if (_originalPanels == null)
                 {
-                    originalPanels = AssetHandler.Bundle.LoadAsset<GameObject>("All Panels.prefab");
+                    _originalPanels = AssetHandler.Bundle.LoadAsset<GameObject>("All Panels.prefab");
                 }
 
-                currentPanels = Instantiate(originalPanels, CanvasController.Instance.transform);
+                _currentPanels = Instantiate(_originalPanels, CanvasController.Instance.transform);
 
-                DPS = currentPanels.ChildByName("Top Row").ChildByName("DPS");
-                Speed = currentPanels.ChildByName("Top Row").ChildByName("Speed");
-                Info = currentPanels.ChildByName("Bottom Row").ChildByName("Info");
-                Weapons = currentPanels.ChildByName("Bottom Row").ChildByName("Weapons");
+                _dps = _currentPanels.ChildByName("Top Row").ChildByName("DPS");
+                _speed = _currentPanels.ChildByName("Top Row").ChildByName("Speed");
+                _info = _currentPanels.ChildByName("Bottom Row").ChildByName("Info");
+                _weapons = _currentPanels.ChildByName("Bottom Row").ChildByName("Weapons");
 
-                DPSText = DPS.ChildByName("DPS").GetComponent<Text>();
-                SpeedText = Speed.ChildByName("SPEED").GetComponent<Text>();
-                HPText = Info.ChildByName("HP").GetComponent<Text>();
-                StaminaText = Info.ChildByName("Stamina").GetComponent<Text>();
-                GunImage = Weapons.ChildByName("Gun").GetComponent<Image>();
-                PunchImage = Weapons.ChildByName("Fist").GetComponent<Image>();
-                RailSlider = Weapons.ChildByName("Slider").GetComponent<Slider>();
+                _dpsText = _dps.ChildByName("DPS").GetComponent<Text>();
+                _speedText = _speed.ChildByName("SPEED").GetComponent<Text>();
+                _hpText = _info.ChildByName("HP").GetComponent<Text>();
+                _staminaText = _info.ChildByName("Stamina").GetComponent<Text>();
+                _gunImage = _weapons.ChildByName("Gun").GetComponent<Image>();
+                _punchImage = _weapons.ChildByName("Fist").GetComponent<Image>();
+                _railSlider = _weapons.ChildByName("Slider").GetComponent<Slider>();
 
                 OnSubsettingUpdate();
             }
         }
 
-        private float CalculateDPS()
+        private float CalculateDps()
         {
             float Damage = 0;
             // I would use foreach but you can't edit the list in foreaches
@@ -178,9 +180,9 @@ namespace UltraTweaker.Tweaks.Impl
 
         public void Update()
         {
-            if (currentPanels != null)
+            if (_currentPanels != null)
             {
-                if (Info.activeSelf && NewMovement.Instance != null)
+                if (_info.activeSelf && NewMovement.Instance != null)
                 {
                     string prefix = "";
                     string suffix = "";
@@ -190,38 +192,38 @@ namespace UltraTweaker.Tweaks.Impl
                         suffix += "</color>";
                     }
 
-                    HPText.text = $"{NewMovement.Instance.hp}{prefix} / {100 - Math.Round(NewMovement.Instance.antiHp, 0)}{suffix}";
-                    StaminaText.text = $"{(NewMovement.Instance.boostCharge / 100).ToString("0.00")} / 3.00";
+                    _hpText.text = $"{NewMovement.Instance.hp}{prefix} / {100 - Math.Round(NewMovement.Instance.antiHp, 0)}{suffix}";
+                    _staminaText.text = $"{(NewMovement.Instance.boostCharge / 100).ToString("0.00")} / 3.00";
                 }
 
-                if (Weapons.activeSelf && NewMovement.Instance != null && WeaponHUD.Instance != null && WeaponCharges.Instance != null && FistControl.Instance != null)
+                if (_weapons.activeSelf && NewMovement.Instance != null && WeaponHUD.Instance != null && WeaponCharges.Instance != null && FistControl.Instance != null)
                 {
-                    GunImage.sprite = WeaponHUD.Instance.img.sprite;
-                    GunImage.color = WeaponHUD.Instance.img.color;
-                    PunchImage.sprite = FistControl.Instance.fistIcon.sprite;
-                    PunchImage.color = FistControl.Instance.fistIcon.color;
-                    RailSlider.value = WeaponCharges.Instance.raicharge;
+                    _gunImage.sprite = WeaponHUD.Instance.img.sprite;
+                    _gunImage.color = WeaponHUD.Instance.img.color;
+                    _punchImage.sprite = FistControl.Instance.fistIcon.sprite;
+                    _punchImage.color = FistControl.Instance.fistIcon.color;
+                    _railSlider.value = WeaponCharges.Instance.raicharge;
                 }
 
-                if (DPS.activeSelf)
+                if (_dps.activeSelf)
                 {
-                    DPSText.text = Math.Round(CalculateDPS(), 2).ToString();
+                    _dpsText.text = Math.Round(CalculateDps(), 2).ToString();
                 }
 
-                if (Speed.activeSelf)
+                if (_speed.activeSelf)
                 {
                     if (Subsettings["speed_mode"].GetValue<int>() == 0)
                     {
-                        SpeedText.fontSize = 72;
-                        SpeedText.text = Math.Round(NewMovement.Instance.rb.velocity.magnitude, 2).ToString();
+                        _speedText.fontSize = 72;
+                        _speedText.text = Math.Round(NewMovement.Instance.rb.velocity.magnitude, 2).ToString();
                     } else
                     {
-                        SpeedText.fontSize = 42;
+                        _speedText.fontSize = 42;
                         Vector3 velo = NewMovement.Instance.rb.velocity;
                         string text = new Vector3(velo.x, velo.y, velo.z).ToString();
                         text = text.Replace("(", "").Replace(")", "").Replace(", ", "\n");
 
-                        SpeedText.text = text;
+                        _speedText.text = text;
                     }
                 }
             }

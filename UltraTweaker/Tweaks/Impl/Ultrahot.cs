@@ -25,20 +25,15 @@ namespace UltraTweaker.Tweaks.Impl
         {
             if (IsGameplayScene())
             {
-                float VelocityFor1 = 20f; // The amount of velocity needed to make timescale 1
-                float Min = 0.01f;
-                float Max = 1.25f;
-                float LerpSpeed = 15f;
+                float velocityForOne = 20f; // The amount of velocity needed to make timescale 1
+                float min = 0.01f;
+                float max = 1.25f;
+                float lerpSpeed = 15f;
 
-                float thing = NewMovement.Instance.rb.velocity.magnitude / VelocityFor1;
+                float targetSpeed = NewMovement.Instance.rb.velocity.magnitude / velocityForOne;
+                targetSpeed = Mathf.Clamp(targetSpeed, min, max);
 
-                if (thing > Max)
-                    thing = Max;
-
-                if (thing < Min)
-                    thing = Min;
-
-                Time.timeScale = Mathf.Lerp(Time.timeScale, thing, Time.deltaTime * LerpSpeed);
+                Time.timeScale = Mathf.Lerp(Time.timeScale, targetSpeed, Time.deltaTime * lerpSpeed);
             }
         }
     }

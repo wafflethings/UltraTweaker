@@ -3,26 +3,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UltraTweaker.Subsettings.Impl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UltraTweaker.UIElements.Impl;
 
 namespace UltraTweaker.Tweaks.Impl
 {
     [TweakMetadata("UI Scale", $"{UltraTweaker.GUID}.ui_scale", "Change the size of your HUD and UI.", $"{UltraTweaker.GUID}.hud", 0)]
     public class UIScale : Tweak
     {
-        private Harmony harmony = new($"{UltraTweaker.GUID}.ui_scale");
+        private Harmony _harmony = new($"{UltraTweaker.GUID}.ui_scale");
 
+        public static bool DoesntKnowOriginal = true;
         public static Vector3 OriginalInfoScale;
         public static Vector3 OriginalStyleScale;
         public static Vector3 OriginalResultsScale;
 
-        private static GameObject Info;
-        private static GameObject Style;
-        private static GameObject Results;
-
-        public static bool doesntKnowOriginal = true;
+        private static GameObject _info;
+        private static GameObject _style;
+        private static GameObject _results;
 
         public UIScale()
         {
@@ -48,8 +49,8 @@ namespace UltraTweaker.Tweaks.Impl
         public override void OnTweakEnabled()
         {
             base.OnTweakEnabled();
-            doesntKnowOriginal = true;
-            harmony.PatchAll(typeof(UIScalePatches));
+            DoesntKnowOriginal = true;
+            _harmony.PatchAll(typeof(UIScalePatches));
             UpdateHUD();
             UpdateCanvas();
         }
@@ -59,7 +60,7 @@ namespace UltraTweaker.Tweaks.Impl
             base.OnTweakDisabled();
             UpdateHUD(true);
             UpdateCanvas(true);
-            harmony.UnpatchSelf();
+            _harmony.UnpatchSelf();
         }
         public override void OnSubsettingUpdate()
         {
@@ -69,28 +70,28 @@ namespace UltraTweaker.Tweaks.Impl
 
         public static void UpdateHUD(bool toDefault = false)
         {
-            if ((Info == null || Style == null || Results == null) && FindObjectsOfType<HudController>() != null)
+            if ((_info == null || _style == null || _results == null) && FindObjectsOfType<HudController>() != null)
             {
                 foreach (HudController hc in FindObjectsOfType<HudController>())
                 {
                     if (hc.gameObject.name == "HUD")
                     {
-                        Info = hc.gameObject.ChildByName("GunCanvas");
-                        Style = hc.gameObject.ChildByName("StyleCanvas");
-                        Results = hc.gameObject.ChildByName("FinishCanvas");
+                        _info = hc.gameObject.ChildByName("GunCanvas");
+                        _style = hc.gameObject.ChildByName("StyleCanvas");
+                        _results = hc.gameObject.ChildByName("FinishCanvas");
 
-                        if (doesntKnowOriginal)
+                        if (DoesntKnowOriginal)
                         {
-                            OriginalInfoScale = Info.transform.localScale;
-                            OriginalStyleScale = Style.transform.localScale;
-                            OriginalResultsScale = Results.transform.localScale;
-                            doesntKnowOriginal = false;
+                            OriginalInfoScale = _info.transform.localScale;
+                            OriginalStyleScale = _style.transform.localScale;
+                            OriginalResultsScale = _results.transform.localScale;
+                            DoesntKnowOriginal = false;
                         }
                     }
                 }
             }
 
-            if (!(Info == null || Style == null || Results == null))
+            if (!(_info == null || _style == null || _results == null))
             {
                 float InfoScale = GetInstance<UIScale>().Subsettings["info_hud_scale"].GetValue<int>();
                 float StyleScale = GetInstance<UIScale>().Subsettings["style_hud_scale"].GetValue<int>();
@@ -98,15 +99,15 @@ namespace UltraTweaker.Tweaks.Impl
 
                 if (!toDefault)
                 {
-                    Info.transform.localScale = OriginalInfoScale * (InfoScale / 100);
-                    Style.transform.localScale = OriginalStyleScale * (StyleScale / 100);
-                    Results.transform.localScale = OriginalResultsScale * (ResultsScale / 100);
+                    _info.transform.localScale = OriginalInfoScale * (InfoScale / 100);
+                    _style.transform.localScale = OriginalStyleScale * (StyleScale / 100);
+                    _results.transform.localScale = OriginalResultsScale * (ResultsScale / 100);
                 }
                 else
                 {
-                    Info.transform.localScale = OriginalInfoScale;
-                    Style.transform.localScale = OriginalStyleScale;
-                    Results.transform.localScale = OriginalResultsScale;
+                    _info.transform.localScale = OriginalInfoScale;
+                    _style.transform.localScale = OriginalStyleScale;
+                    _results.transform.localScale = OriginalResultsScale;
                 }
             }
         }
@@ -130,7 +131,7 @@ namespace UltraTweaker.Tweaks.Impl
 
         public override void OnSceneLoad(Scene scene, LoadSceneMode mode)
         {
-            doesntKnowOriginal = true;
+            DoesntKnowOriginal = true;
         }
 
         public static class UIScalePatches
@@ -146,16 +147,16 @@ namespace UltraTweaker.Tweaks.Impl
             {
                 if (__instance.gameObject.name == "HUD")
                 {
-                    Info = __instance.gameObject.ChildByName("GunCanvas");
-                    Style = __instance.gameObject.ChildByName("StyleCanvas");
-                    Results = __instance.gameObject.ChildByName("FinishCanvas");
+                    _info = __instance.gameObject.ChildByName("GunCanvas");
+                    _style = __instance.gameObject.ChildByName("StyleCanvas");
+                    _results = __instance.gameObject.ChildByName("FinishCanvas");
 
-                    if (doesntKnowOriginal)
+                    if (DoesntKnowOriginal)
                     {
-                        OriginalInfoScale = Info.transform.localScale;
-                        OriginalStyleScale = Style.transform.localScale;
-                        OriginalResultsScale = Results.transform.localScale;
-                        doesntKnowOriginal = false;
+                        OriginalInfoScale = _info.transform.localScale;
+                        OriginalStyleScale = _style.transform.localScale;
+                        OriginalResultsScale = _results.transform.localScale;
+                        DoesntKnowOriginal = false;
                     }
 
                     UpdateHUD();

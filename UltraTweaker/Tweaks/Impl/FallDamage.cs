@@ -11,8 +11,6 @@ namespace UltraTweaker.Tweaks.Impl
     [TweakMetadata("Fall Damage", $"{UltraTweaker.GUID}.mutator_fall_damage", "Take damage when you hit the floor too hard.", $"{UltraTweaker.GUID}.mutators", 1, "Bone", true, true)]
     public class FallDamage : Tweak
     {
-        //private Harmony harmony = new($"{UltraTweaker.GUID}.mutator_fall_damage");
-
         public static GameObject CrunchSound;
         public static bool Immunity;
 
@@ -24,14 +22,11 @@ namespace UltraTweaker.Tweaks.Impl
             {
                 CrunchSound = AssetHandler.Bundle.LoadAsset<GameObject>("CrunchSound.prefab");
             }
-
-            //harmony.PatchAll(typeof(FallPatches));
         }
 
         public override void OnTweakDisabled()
         {
             base.OnTweakDisabled();
-            //harmony.UnpatchSelf();
         }
 
         private void Update()
@@ -67,7 +62,7 @@ namespace UltraTweaker.Tweaks.Impl
                         LastCrunch = Instantiate(CrunchSound, NewMovement.Instance.transform.position, Quaternion.identity, transform);
                         LastCrunch.GetComponent<AudioSource>().volume = 0.2f -(Stored / 100);
 
-                        if (SceneManager.GetActiveScene().name == "Level 4-4" && damage >= 100)
+                        if (NewMovement.Instance.hp != 1 && damage >= 100)
                         {
                             damage = 99;
                         }

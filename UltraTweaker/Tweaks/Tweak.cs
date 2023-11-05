@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using UltraTweaker.Subsettings;
+using UltraTweaker.UIElements;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,11 +17,12 @@ namespace UltraTweaker.Tweaks
     /// </summary>
     public class Tweak : MonoBehaviour
     {
-        private static GameObject TweakHolder;
+        private static GameObject _tweakHolder;
+
         public static void CreateTweakHolder()
         {
-            TweakHolder = new("UT Tweak Holder - don't destroy!");
-            DontDestroyOnLoad(TweakHolder);
+            _tweakHolder = new("UT Tweak Holder - don't destroy!");
+            DontDestroyOnLoad(_tweakHolder);
 
             foreach (Assembly asm in UltraTweaker.AssembliesToCheck)
             {
@@ -28,7 +31,7 @@ namespace UltraTweaker.Tweaks
                 foreach (Type t in asm.DefinedTypes.Where(type => type.IsDefined(typeof(Metadata), false)))
                 {
                     Debug.Log($"Found tweak; {t.Name}.");
-                    Tweak tw = (Tweak)TweakHolder.AddComponent(t);
+                    Tweak tw = (Tweak)_tweakHolder.AddComponent(t);
                     tw.enabled = false;
                     UltraTweaker.AllTweaks.Add(t, tw);
                 }
@@ -46,7 +49,7 @@ namespace UltraTweaker.Tweaks
                     if (!UltraTweaker.AllTweaks.ContainsKey(t))
                     {
                         Debug.Log($"Found tweak; {t.Name}.");
-                        Tweak tw = (Tweak)TweakHolder.AddComponent(t);
+                        Tweak tw = (Tweak)_tweakHolder.AddComponent(t);
                         tw.enabled = false;
                         UltraTweaker.AllTweaks.Add(t, tw);
                     }
@@ -70,14 +73,14 @@ namespace UltraTweaker.Tweaks
         {
             get
             {
-                return isEnabled;
+                return _isEnabled;
             }
 
             set
             {
-                if (isEnabled != value)
+                if (_isEnabled != value)
                 {
-                    isEnabled = value;
+                    _isEnabled = value;
 
                     if (value == false)
                     {
@@ -93,7 +96,7 @@ namespace UltraTweaker.Tweaks
             }
         }
 
-        private bool isEnabled = false;
+        private bool _isEnabled = false;
 
         /// <summary>
         /// The current UI element for this tweak.
@@ -102,15 +105,15 @@ namespace UltraTweaker.Tweaks
         {
             get
             {
-                if (element == null)
+                if (_element == null)
                 {
-                    element = new(this);
+                    _element = new(this);
                 }
-                return element;
+                return _element;
             }
         }
 
-        private TweakUIElement element;
+        private TweakUIElement _element;
 
         /// <summary>
         /// Called whenever the tweak is toggled on.
@@ -171,11 +174,11 @@ namespace UltraTweaker.Tweaks
         /// </summary>
         public void SetControls(bool active)
         {
-            element.SetControlsActive(active);
+            _element.SetControlsActive(active);
 
             foreach (Subsetting sub in Subsettings.Values)
             {
-                sub.element.SetControlsActive(active);
+                sub.Element.SetControlsActive(active);
             }
         }
     }

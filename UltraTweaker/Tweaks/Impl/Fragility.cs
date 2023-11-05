@@ -4,14 +4,16 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
+using UltraTweaker.Subsettings.Impl;
 using UnityEngine;
+using UltraTweaker.UIElements.Impl;
 
 namespace UltraTweaker.Tweaks.Impl
 {
     [TweakMetadata("Fragility", $"{UltraTweaker.GUID}.mutator_fragility", "Change your max health.", $"{UltraTweaker.GUID}.mutators", 3, "Fragility", true, true)]
     public class Fragility : Tweak
     {
-        private Harmony harmony = new($"{UltraTweaker.GUID}.mutator_fragility");
+        private Harmony _harmony = new($"{UltraTweaker.GUID}.mutator_fragility");
 
         public Fragility()
         {
@@ -25,13 +27,13 @@ namespace UltraTweaker.Tweaks.Impl
         public override void OnTweakEnabled()
         {
             base.OnTweakEnabled();
-            harmony.PatchAll(typeof(FragilityPatches));
+            _harmony.PatchAll(typeof(FragilityPatches));
         }
 
         public override void OnTweakDisabled()
         {
             base.OnTweakDisabled();
-            harmony.UnpatchSelf();
+            _harmony.UnpatchSelf();
         }
 
         public static class FragilityPatches

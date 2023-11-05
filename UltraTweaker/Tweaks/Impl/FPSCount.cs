@@ -16,17 +16,17 @@ namespace UltraTweaker.Tweaks.Impl
     [TweakMetadata("FPS Counter", $"{UltraTweaker.GUID}.fps_meter", "Shows a counter with your frames per second.", $"{UltraTweaker.GUID}.hud", 2)]
     public class FPSCount : Tweak
     {
-        private GameObject originalCounter;
-        private GameObject counter;
-        private Text text;
+        private GameObject _originalCounter;
+        private GameObject _counter;
+        private Text _text;
 
         public override void OnTweakEnabled()
         {
             base.OnTweakEnabled();
             
-            if (originalCounter == null)
+            if (_originalCounter == null)
             {
-                originalCounter = AssetHandler.Bundle.LoadAsset<GameObject>("FPS");
+                _originalCounter = AssetHandler.Bundle.LoadAsset<GameObject>("FPS");
             }
 
             CreateCounter();
@@ -35,15 +35,15 @@ namespace UltraTweaker.Tweaks.Impl
         public override void OnTweakDisabled()
         {
             base.OnTweakDisabled();
-            Destroy(counter);
+            Destroy(_counter);
         }
 
         public void CreateCounter()
         {
             if (CanvasController.Instance != null)
             {
-                counter = Instantiate(originalCounter, CanvasController.Instance.transform);
-                text = counter.ChildByName("Count").GetComponent<Text>();
+                _counter = Instantiate(_originalCounter, CanvasController.Instance.transform);
+                _text = _counter.ChildByName("Count").GetComponent<Text>();
             }
         }
 
@@ -54,10 +54,10 @@ namespace UltraTweaker.Tweaks.Impl
 
         public void Update()
         {
-            if (text != null)
+            if (_text != null)
             {
                 float FPS = 1.00f / Time.unscaledDeltaTime;
-                text.text = $"FPS: {(int)FPS}";
+                _text.text = $"FPS: {(int)FPS}";
             }
         }
     }

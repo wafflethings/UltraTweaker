@@ -2,16 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UltraTweaker.Subsettings.Impl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UltraTweaker.UIElements.Impl;
 
 namespace UltraTweaker.Tweaks.Impl
 {
     [TweakMetadata("Viewmodel Transform", $"{UltraTweaker.GUID}.viewmodel_transform", "Resize, change the FOV of, and otherwise tweak the viewmodel.", $"{UltraTweaker.GUID}.misc", 1)]
     public class ViewmodelTransform : Tweak
     {
-        private Harmony harmony = new($"{UltraTweaker.GUID}.viewmodel_transform");
-        private static Dictionary<GameObject, Vector3> originalScale = new();
+        private Harmony _harmony = new($"{UltraTweaker.GUID}.viewmodel_transform");
+        private static Dictionary<GameObject, Vector3> _originalScale = new();
 
         public ViewmodelTransform()
         {
@@ -35,7 +37,7 @@ namespace UltraTweaker.Tweaks.Impl
         public override void OnTweakEnabled()
         {
             base.OnTweakEnabled();
-            harmony.PatchAll(typeof(ViewmodelPatches));
+            _harmony.PatchAll(typeof(ViewmodelPatches));
 
             if (GunControl.Instance != null && FistControl.Instance != null)
             {
@@ -46,7 +48,7 @@ namespace UltraTweaker.Tweaks.Impl
         public override void OnTweakDisabled()
         {
             base.OnTweakDisabled();
-            harmony.UnpatchSelf();
+            _harmony.UnpatchSelf();
 
             if (GunControl.Instance != null && FistControl.Instance != null)
             {
@@ -58,17 +60,17 @@ namespace UltraTweaker.Tweaks.Impl
                 GunControl.Instance.GetComponent<RotateToFaceFrustumTarget>().enabled = true;
             }
 
-            foreach (GameObject go in originalScale.Keys)
+            foreach (GameObject go in _originalScale.Keys)
             {
-                go.transform.localScale = originalScale[go];
+                go.transform.localScale = _originalScale[go];
             }
 
-            originalScale.Clear();
+            _originalScale.Clear();
         }
 
         public override void OnSceneLoad(Scene scene, LoadSceneMode mode)
         {
-            originalScale.Clear();
+            _originalScale.Clear();
         }
 
         public void LateUpdate()
@@ -130,21 +132,21 @@ namespace UltraTweaker.Tweaks.Impl
             {
                 if (__instance.gameObject.name.Contains("Revolver"))
                 {
-                    if (!originalScale.ContainsKey(__instance.gameObject))
+                    if (!_originalScale.ContainsKey(__instance.gameObject))
                     {
-                        originalScale.Add(__instance.gameObject, __instance.gameObject.transform.localScale);
+                        _originalScale.Add(__instance.gameObject, __instance.gameObject.transform.localScale);
                     }
-                    __instance.gameObject.transform.localScale = originalScale[__instance.gameObject] * GetInstance<ViewmodelTransform>().Subsettings["viewmodel_size_multiplier"].GetValue<int>() / 100;
+                    __instance.gameObject.transform.localScale = _originalScale[__instance.gameObject] * GetInstance<ViewmodelTransform>().Subsettings["viewmodel_size_multiplier"].GetValue<int>() / 100;
                 } else
                 {
                     foreach (GameObject child in __instance.gameObject.ChildrenList())
                     {
-                        if (!originalScale.ContainsKey(child))
+                        if (!_originalScale.ContainsKey(child))
                         {
-                            originalScale.Add(child, child.transform.localScale);
+                            _originalScale.Add(child, child.transform.localScale);
                         }
 
-                        child.transform.localScale = originalScale[child] * GetInstance<ViewmodelTransform>().Subsettings["viewmodel_size_multiplier"].GetValue<int>() / 100;
+                        child.transform.localScale = _originalScale[child] * GetInstance<ViewmodelTransform>().Subsettings["viewmodel_size_multiplier"].GetValue<int>() / 100;
                     }
                 }
             }

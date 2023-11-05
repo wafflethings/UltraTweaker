@@ -12,24 +12,24 @@ namespace UltraTweaker.Tweaks.Impl
     [TweakMetadata("CG Stats", $"{UltraTweaker.GUID}.cg_stats", "Shows the tab panel, but for the Cyber Grind.", $"{UltraTweaker.GUID}.cybergrind", 1)]
     public class CGUtils : Tweak
     {
-        private GameObject originalPanel;
-        private GameObject panel;
-        private Text waves;
-        private Text enemies;
-        private Text time;
-        private Text kills;
-        private Text style;
+        private GameObject _originalPanel;
+        private GameObject _panel;
+        private Text _waves;
+        private Text _enemies;
+        private Text _time;
+        private Text _kills;
+        private Text _style;
 
-        private LevelStatsEnabler lse;
+        private StatsManager _sm;
+        private LevelStatsEnabler _lse;
 
-        private float minutes;
-        private float seconds;
-
-        private StatsManager sm;
+        private float _minutes;
+        private float _seconds;
 
         public override void OnTweakEnabled()
         {
             base.OnTweakEnabled();
+
             if (SceneHelper.CurrentScene == "Endless")
             {
                 Create();
@@ -40,70 +40,70 @@ namespace UltraTweaker.Tweaks.Impl
         {
             base.OnTweakDisabled();
 
-            if (panel != null)
+            if (_panel != null)
             {
-                Destroy(panel);
+                Destroy(_panel);
             }
         }
 
         public void Create()
         {
-            sm = StatsManager.Instance;
+            _lse = CanvasController.Instance.gameObject.GetComponentInChildren<LevelStatsEnabler>(true);
+            _sm = StatsManager.Instance;
 
-            lse = CanvasController.Instance.gameObject.GetComponentInChildren<LevelStatsEnabler>(true);
-
-            if (originalPanel == null)
+            if (_originalPanel == null)
             {
-                originalPanel = AssetHandler.Bundle.LoadAsset<GameObject>("Cybergrind Stats.prefab");
+                _originalPanel = AssetHandler.Bundle.LoadAsset<GameObject>("Cybergrind Stats.prefab");
             }
-            panel = Instantiate(originalPanel, lse.transform);
 
-            waves = panel.ChildByName("Waves Title").ChildByName("Waves").GetComponent<Text>();
-            enemies = panel.ChildByName("Enemies Title").ChildByName("Enemies").GetComponent<Text>();
-            time = panel.ChildByName("Time Title").ChildByName("Time").GetComponent<Text>();
-            kills = panel.ChildByName("Kills Title").ChildByName("Kills").GetComponent<Text>();
-            style = panel.ChildByName("Style Title").ChildByName("Style").GetComponent<Text>();
+            _panel = Instantiate(_originalPanel, _lse.transform);
 
-            waves.text = "0";
-            enemies.text = "0";
-            time.text = "00:00.000";
-            kills.text = "0";
-            style.text = "0";
+            _waves = _panel.ChildByName("Waves Title").ChildByName("Waves").GetComponent<Text>();
+            _enemies = _panel.ChildByName("Enemies Title").ChildByName("Enemies").GetComponent<Text>();
+            _time = _panel.ChildByName("Time Title").ChildByName("Time").GetComponent<Text>();
+            _kills = _panel.ChildByName("Kills Title").ChildByName("Kills").GetComponent<Text>();
+            _style = _panel.ChildByName("Style Title").ChildByName("Style").GetComponent<Text>();
 
-            panel.SetActive(false);
+            _waves.text = "0";
+            _enemies.text = "0";
+            _time.text = "00:00.000";
+            _kills.text = "0";
+            _style.text = "0";
+
+            _panel.SetActive(false);
         }
 
         public void Update()
         {
-            if (SceneHelper.CurrentScene == "Endless" && lse != null)
+            if (SceneHelper.CurrentScene == "Endless" && _lse != null)
             {
-                if (!lse.gameObject.activeSelf)
+                if (!_lse.gameObject.activeSelf)
                 {
-                    lse.gameObject.SetActive(true);
+                    _lse.gameObject.SetActive(true);
                 }
 
-                if (lse.levelStats != panel)
+                if (_lse.levelStats != _panel)
                 {
-                    lse.levelStats = panel;
+                    _lse.levelStats = _panel;
                 }
 
                 EndlessGrid eg = EndlessGrid.Instance;
 
-                waves.text = eg.currentWave.ToString();
-                enemies.text = (eg.tempEnemyAmount - eg.anw.deadEnemies).ToString();
-                kills.text = sm.kills.ToString();
-                style.text = sm.stylePoints.ToString();
+                _waves.text = eg.currentWave.ToString();
+                _enemies.text = (eg.tempEnemyAmount - eg.anw.deadEnemies).ToString();
+                _kills.text = _sm.kills.ToString();
+                _style.text = _sm.stylePoints.ToString();
 
-                seconds = sm.seconds;
-                minutes = 0f;
+                _seconds = _sm.seconds;
+                _minutes = 0f;
 
-                while (seconds >= 60f)
+                while (_seconds >= 60f)
                 {
-                    seconds -= 60f;
-                    minutes += 1f;
+                    _seconds -= 60f;
+                    _minutes += 1f;
                 }
 
-                time.text = minutes + ":" + seconds.ToString("00.000");
+                _time.text = _minutes + ":" + _seconds.ToString("00.000");
             }
         }
 

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
+using UltraTweaker.Subsettings.Impl;
+using UltraTweaker.UIElements.Impl;
 using UnityEngine;
 
 namespace UltraTweaker.Tweaks.Impl
@@ -12,7 +14,7 @@ namespace UltraTweaker.Tweaks.Impl
     [TweakMetadata("Fresh", $"{UltraTweaker.GUID}.mutator_fresh", "Hurts you if you're not stylish.", $"{UltraTweaker.GUID}.mutators", 4, "Fresh", true, true)]
     public class Fresh : Tweak
     {
-        private float ToRemove = 0;
+        private float _toRemove = 0;
 
         public Fresh()
         {
@@ -54,12 +56,12 @@ namespace UltraTweaker.Tweaks.Impl
 
             if (NewMovement.Instance != null && StatsManager.Instance.timer && GunControl.Instance.activated)
             {
-                ToRemove += dict[StyleHUD.Instance.GetFreshnessState(GunControl.Instance.currentWeapon)] * Time.deltaTime;
+                _toRemove += dict[StyleHUD.Instance.GetFreshnessState(GunControl.Instance.currentWeapon)] * Time.deltaTime;
 
-                if ((int)ToRemove >= 1)
+                if ((int)_toRemove >= 1)
                 {
-                    NewMovement.Instance.hp -= (int)ToRemove;
-                    ToRemove -= (int)ToRemove;
+                    NewMovement.Instance.hp -= (int)_toRemove;
+                    _toRemove -= (int)_toRemove;
                 }
 
                 if (NewMovement.Instance.hp <= 0 && !NewMovement.Instance.dead)

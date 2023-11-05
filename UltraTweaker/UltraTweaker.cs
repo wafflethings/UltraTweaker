@@ -16,7 +16,7 @@ namespace UltraTweaker
     {
         public const string GUID = "waffle.ultrakill.ultratweaker";
         public const string Name = "UltraTweaker";
-        public const string Version = "1.0.3";
+        public const string Version = "1.0.7";
        
         public static Dictionary<Type, Tweak> AllTweaks = new();
         internal static List<Assembly> AssembliesToCheck = new()
@@ -33,7 +33,7 @@ namespace UltraTweaker
 
         public void Start()
         {
-            Debug.Log($"{Name} has started.");
+            Debug.Log($"{Name} v{Version} has started.");
 
             AssetHandler.LoadBundle();
             Tweak.CreateTweakHolder();

@@ -2,15 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UltraTweaker.Subsettings.Impl;
 using UnityEngine;
+using UltraTweaker.UIElements.Impl;
 
 namespace UltraTweaker.Tweaks.Impl
 {
     [TweakMetadata("Floor Is Lava", $"{UltraTweaker.GUID}.mutator_floor_is_lava", "Take damage when on the floor.", $"{UltraTweaker.GUID}.mutators", 2, "Lava", true, true)]
     public class FloorIsLava : Tweak
     {
-        private float ToRemove = 0;
-        private float OnFloorFor;
+        private float _toRemove = 0;
+        private float _onFloorFor;
 
         public FloorIsLava()
         {
@@ -40,21 +42,21 @@ namespace UltraTweaker.Tweaks.Impl
             {
                 if (NewMovement.Instance.gc.touchingGround)
                 {
-                    OnFloorFor += Time.deltaTime;
+                    _onFloorFor += Time.deltaTime;
                 }
                 else
                 {
-                    OnFloorFor = 0;
+                    _onFloorFor = 0;
                 }
 
-                if (StatsManager.Instance.timer && OnFloorFor > Subsettings["damage_after"].GetValue<float>())
+                if (StatsManager.Instance.timer && _onFloorFor > Subsettings["damage_after"].GetValue<float>())
                 {
-                    ToRemove += Time.deltaTime * Subsettings["damage_per_second"].GetValue<int>();
+                    _toRemove += Time.deltaTime * Subsettings["damage_per_second"].GetValue<int>();
 
-                    if ((int)ToRemove >= 1)
+                    if ((int)_toRemove >= 1)
                     {
-                        NewMovement.Instance.hp -= (int)ToRemove;
-                        ToRemove -= (int)ToRemove;
+                        NewMovement.Instance.hp -= (int)_toRemove;
+                        _toRemove -= (int)_toRemove;
                     }
 
                     if (NewMovement.Instance.hp <= 0 && !NewMovement.Instance.dead)

@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
+using UltraTweaker.Subsettings.Impl;
 using UnityEngine;
 using UnityEngine.UI;
+using UltraTweaker.UIElements.Impl;
 
 namespace UltraTweaker.Tweaks.Impl
 {
     [TweakMetadata("Tankify", $"{UltraTweaker.GUID}.mutator_tankify", "Change enemy health.", $"{UltraTweaker.GUID}.mutators", 11, "Tankify", false, true)]
     public class Tankify : Tweak
     {
-        private Harmony harmony = new($"{UltraTweaker.GUID}.mutator_tankify");
+        private Harmony _harmony = new($"{UltraTweaker.GUID}.mutator_tankify");
 
         public Tankify()
         {
@@ -26,13 +28,13 @@ namespace UltraTweaker.Tweaks.Impl
         public override void OnTweakEnabled()
         {
             base.OnTweakEnabled();
-            harmony.PatchAll(typeof(TankifyPatches));
+            _harmony.PatchAll(typeof(TankifyPatches));
         }
 
         public override void OnTweakDisabled()
         {
             base.OnTweakDisabled();
-            harmony.UnpatchSelf();
+            _harmony.UnpatchSelf();
         }
 
         public static class TankifyPatches

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UltraTweaker.Subsettings;
 using UltraTweaker.Tweaks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,15 +11,15 @@ namespace UltraTweaker.Handlers
 {
     public static class SettingUIHandler
     {
-        public static Harmony harmony = new($"{UltraTweaker.GUID}.setting_ui_handler");
+        public static Harmony Harmony = new($"{UltraTweaker.GUID}.setting_ui_handler");
 
-        public static GameObject originalSettingMenu;
-        public static GameObject originalSettingPage;
-        public static GameObject originalPageButton;
-        public static GameObject currentSettingMenu;
-        public static GameObject originalResetButton;
-        public static GameObject currentResetButton;
-        public static GameObject newBtn;
+        public static GameObject OriginalSettingMenu;
+        public static GameObject OriginalSettingPage;
+        public static GameObject OriginalPageButton;
+        public static GameObject CurrentSettingMenu;
+        public static GameObject OriginalResetButton;
+        public static GameObject CurrentResetButton;
+        public static GameObject NewButton;
 
         public static Dictionary<string, Page> Pages = new()
         {
@@ -31,38 +32,38 @@ namespace UltraTweaker.Handlers
 
         public static void Patch()
         {
-            harmony.PatchAll(typeof(SettingUIPatches));
+            Harmony.PatchAll(typeof(SettingUIPatches));
         }
 
         public static void CreateUI(GameObject optionsMenu)
         {
-            if (originalSettingMenu == null)
+            if (OriginalSettingMenu == null)
             {
-                originalSettingMenu = AssetHandler.Bundle.LoadAsset<GameObject>("Settings Menu.prefab");
+                OriginalSettingMenu = AssetHandler.Bundle.LoadAsset<GameObject>("Settings Menu.prefab");
             }
 
-            if (originalSettingPage == null)
+            if (OriginalSettingPage == null)
             {
-                originalSettingPage = AssetHandler.Bundle.LoadAsset<GameObject>("Settings Page.prefab");
+                OriginalSettingPage = AssetHandler.Bundle.LoadAsset<GameObject>("Settings Page.prefab");
             }
 
-            if (originalPageButton == null)
+            if (OriginalPageButton == null)
             {
-                originalPageButton = AssetHandler.Bundle.LoadAsset<GameObject>("Page Button.prefab");
+                OriginalPageButton = AssetHandler.Bundle.LoadAsset<GameObject>("Page Button.prefab");
             }
 
-            if (originalResetButton == null)
+            if (OriginalResetButton == null)
             {
-                originalResetButton = AssetHandler.Bundle.LoadAsset<GameObject>("Reset Button.prefab");
+                OriginalResetButton = AssetHandler.Bundle.LoadAsset<GameObject>("Reset Button.prefab");
             }
 
-            currentSettingMenu = GameObject.Instantiate(originalSettingMenu, optionsMenu.transform);
+            CurrentSettingMenu = GameObject.Instantiate(OriginalSettingMenu, optionsMenu.transform);
 
             int PagesSoFar = 0;
 
             foreach (Page page in Pages.Values)
             {
-                page.PageObject = GameObject.Instantiate(originalSettingPage, currentSettingMenu.transform);
+                page.PageObject = GameObject.Instantiate(OriginalSettingPage, CurrentSettingMenu.transform);
                 page.PageObject.ChildByName("Text").GetComponent<Text>().text = $"--{page.PageName}--";
                 page.PageObject.name = page.PageName;
                 page.PageObject.AddComponent<HudOpenEffect>();
@@ -73,7 +74,7 @@ namespace UltraTweaker.Handlers
                     page.PageObject.SetActive(false);
                 }
 
-                GameObject pageButton = GameObject.Instantiate(originalPageButton, currentSettingMenu.ChildByName("Page Button Holder").transform);
+                GameObject pageButton = GameObject.Instantiate(OriginalPageButton, CurrentSettingMenu.ChildByName("Page Button Holder").transform);
                 pageButton.transform.SetSiblingIndex(PagesSoFar);
                 pageButton.GetComponent<Button>().onClick.AddListener(() =>
                 {
@@ -92,14 +93,14 @@ namespace UltraTweaker.Handlers
 
                 if(PagesSoFar == 0)
                 {
-                    currentResetButton = GameObject.Instantiate(originalResetButton, page.PageObject.GetComponentInChildren<LayoutGroup>(true).transform);
-                    currentResetButton.GetComponent<Button>().onClick.AddListener(() =>
+                    CurrentResetButton = GameObject.Instantiate(OriginalResetButton, page.PageObject.GetComponentInChildren<LayoutGroup>(true).transform);
+                    CurrentResetButton.GetComponent<Button>().onClick.AddListener(() =>
                     {
                         ResetAllSettings();
-                        GameObject.Destroy(currentSettingMenu);
-                        GameObject.Destroy(newBtn);
+                        GameObject.Destroy(CurrentSettingMenu);
+                        GameObject.Destroy(NewButton);
                         CreateUI(optionsMenu);
-                        currentSettingMenu.SetActive(true);
+                        CurrentSettingMenu.SetActive(true);
                     });
                 }
 
@@ -113,16 +114,16 @@ namespace UltraTweaker.Handlers
                 
                 foreach (Subsetting sub in tw.Subsettings.Values)
                 {
-                    sub.element.Create(tw.Element.currentSetting.GetComponentInChildren<LayoutGroup>(true).transform);
+                    sub.Element.Create(tw.Element.CurrentSetting.GetComponentInChildren<LayoutGroup>(true).transform);
                 }
             }
 
-            newBtn = GameObject.Instantiate(optionsMenu.ChildByName("Gameplay"), optionsMenu.transform);
+            NewButton = GameObject.Instantiate(optionsMenu.ChildByName("Gameplay"), optionsMenu.transform);
 
-            newBtn.transform.localPosition += new Vector3(0, (95 * 1080) / Screen.height, 0);
-            Vector3 newPos = newBtn.transform.position;
+            NewButton.transform.localPosition += new Vector3(0, (95 * 1080) / Screen.height, 0);
+            Vector3 newPos = NewButton.transform.position;
             newPos.y = (int)newPos.y;
-            newBtn.transform.position = newPos;
+            NewButton.transform.position = newPos;
 
             foreach (GameObject child in optionsMenu.ChildrenList())
             {
@@ -130,13 +131,13 @@ namespace UltraTweaker.Handlers
                 {
                     bu.onClick.AddListener(() =>
                     {
-                        currentSettingMenu.SetActive(false);
+                        CurrentSettingMenu.SetActive(false);
                     });
                 }
             }
 
-            newBtn.ChildByName("Text").GetComponent<Text>().text = "ULTRATWEAKER";
-            newBtn.GetComponent<Button>().onClick = new();
+            NewButton.ChildByName("Text").GetComponent<Text>().text = "ULTRATWEAKER";
+            NewButton.GetComponent<Button>().onClick = new();
 
             List<GameObject> toDisable = new()
             {
@@ -149,19 +150,19 @@ namespace UltraTweaker.Handlers
                 optionsMenu.ChildByName("ColorBlindness Options")
             };
 
-            newBtn.GetComponent<Button>().onClick.AddListener(() =>
+            NewButton.GetComponent<Button>().onClick.AddListener(() =>
             {
                 foreach (GameObject go in toDisable)
                 {
                     go.SetActive(false);
                 }
 
-                currentSettingMenu.SetActive(true);
+                CurrentSettingMenu.SetActive(true);
             });
 
-            currentResetButton.transform.SetAsFirstSibling();
-            currentSettingMenu.AddComponent<HudOpenEffect>();
-            currentSettingMenu.SetActive(false);
+            CurrentResetButton.transform.SetAsFirstSibling();
+            CurrentSettingMenu.AddComponent<HudOpenEffect>();
+            CurrentSettingMenu.SetActive(false);
         }
 
         public static void ResetAllSettings()

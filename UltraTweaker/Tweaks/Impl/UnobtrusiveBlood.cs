@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UltraTweaker.Subsettings.Impl;
+using UltraTweaker.UIElements.Impl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,7 +13,7 @@ namespace UltraTweaker.Tweaks.Impl
     [TweakMetadata("Unobtrusive Blood", $"{UltraTweaker.GUID}.unobtrusive_blood", "Make the screen blood more transparent, or gone.", $"{UltraTweaker.GUID}.hud", 3)]
     public class UnobtrusiveBlood : Tweak
     {
-        private Harmony harmony = new($"{UltraTweaker.GUID}.unobtrusive_blood");
+        private Harmony _harmony = new($"{UltraTweaker.GUID}.unobtrusive_blood");
 
         public UnobtrusiveBlood()
         {
@@ -25,7 +27,7 @@ namespace UltraTweaker.Tweaks.Impl
         public override void OnTweakEnabled()
         {
             base.OnTweakEnabled();
-            harmony.PatchAll(typeof(UnobtrusiveBloodPatches));
+            _harmony.PatchAll(typeof(UnobtrusiveBloodPatches));
 
             OnSubsettingUpdate();
         }
@@ -33,7 +35,7 @@ namespace UltraTweaker.Tweaks.Impl
         public override void OnTweakDisabled()
         {
             base.OnTweakDisabled();
-            harmony.UnpatchSelf();
+            _harmony.UnpatchSelf();
         }
 
         public static class UnobtrusiveBloodPatches

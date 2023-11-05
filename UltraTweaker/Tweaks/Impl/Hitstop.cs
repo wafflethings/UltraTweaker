@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UltraTweaker.Subsettings.Impl;
+using UltraTweaker.UIElements.Impl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,7 +13,7 @@ namespace UltraTweaker.Tweaks.Impl
     [TweakMetadata("Hitstop", $"{UltraTweaker.GUID}.hitstop", "Change hitstop duration, change the parry flash.", $"{UltraTweaker.GUID}.misc", 0)]
     public class Hitstop : Tweak
     {
-        private Harmony harmony = new($"{UltraTweaker.GUID}.hitstop");
+        private Harmony _harmony = new($"{UltraTweaker.GUID}.hitstop");
 
         public Hitstop()
         {
@@ -34,7 +36,7 @@ namespace UltraTweaker.Tweaks.Impl
         public override void OnTweakEnabled()
         {
             base.OnTweakEnabled();
-            harmony.PatchAll(typeof(HitstopPatches));
+            _harmony.PatchAll(typeof(HitstopPatches));
 
             OnSubsettingUpdate();
         }
@@ -42,7 +44,7 @@ namespace UltraTweaker.Tweaks.Impl
         public override void OnTweakDisabled()
         {
             base.OnTweakDisabled();
-            harmony.UnpatchSelf();
+            _harmony.UnpatchSelf();
 
             if (TimeController.Instance != null)
             {

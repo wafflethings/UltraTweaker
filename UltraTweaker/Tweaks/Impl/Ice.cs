@@ -2,13 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UltraTweaker.Subsettings.Impl;
+using UltraTweaker.UIElements.Impl;
 
 namespace UltraTweaker.Tweaks.Impl
 {
     [TweakMetadata("Ice", $"{UltraTweaker.GUID}.mutator_ice", "Become slippery.", $"{UltraTweaker.GUID}.mutators", 6, "Ice", false, true)]
     public class Ice : Tweak
     {
-        private Harmony harmony = new($"{UltraTweaker.GUID}.mutator_ice");
+        private Harmony _harmony = new($"{UltraTweaker.GUID}.mutator_ice");
 
         public Ice()
         {
@@ -22,13 +24,13 @@ namespace UltraTweaker.Tweaks.Impl
         public override void OnTweakEnabled()
         {
             base.OnTweakEnabled();
-            harmony.PatchAll(typeof(IcePatches));
+            _harmony.PatchAll(typeof(IcePatches));
         }
 
         public override void OnTweakDisabled()
         {
             base.OnTweakDisabled();
-            harmony.UnpatchSelf();
+            _harmony.UnpatchSelf();
             NewMovement.Instance.modForcedFrictionMultip = 1;
         }
 

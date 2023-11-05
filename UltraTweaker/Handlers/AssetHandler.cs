@@ -11,7 +11,7 @@ namespace UltraTweaker.Handlers
         public static readonly string AssetsPath = Path.Combine(PathUtils.ModPath(), "Assets");
         public static readonly string BundlePath = Path.Combine(AssetsPath, "ultratweaker_assets.bundle");
         public static AssetBundle Bundle { get; private set; }
-        private static Dictionary<string, UnityEngine.Object> CachedAssets = new();
+        private static Dictionary<string, UnityEngine.Object> _cachedAssets = new();
 
         internal static void LoadBundle()
         {
@@ -24,11 +24,11 @@ namespace UltraTweaker.Handlers
         /// <param name="Name">The name of the asset.</param>
         public static T GetCachedAsset<T>(string Name) where T : UnityEngine.Object
         {
-            if (!CachedAssets.ContainsKey(Name))
+            if (!_cachedAssets.ContainsKey(Name))
             {
                 CacheAsset<T>(Name, Bundle);
             }
-            return CachedAssets[Name] as T;
+            return _cachedAssets[Name] as T;
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace UltraTweaker.Handlers
                 bundle = Bundle;
             }
 
-            CachedAssets.Add(Name, bundle.LoadAsset<T>(Name));
+            _cachedAssets.Add(Name, bundle.LoadAsset<T>(Name));
         }
     }
 }

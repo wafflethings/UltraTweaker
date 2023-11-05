@@ -14,12 +14,12 @@ namespace UltraTweaker.Tweaks.Impl
     [TweakMetadata("Force Gun Panel", $"{UltraTweaker.GUID}.force_gun", "Makes the gun panel always appear. So that you can use the other Rail charge indicator.", $"{UltraTweaker.GUID}.hud", 3)]
     public class ForceGunPanel : Tweak
     {
-        private Harmony harmony = new($"{UltraTweaker.GUID}.force_gun");
+        private Harmony _harmony = new($"{UltraTweaker.GUID}.force_gun");
 
         public override void OnTweakEnabled()
         {
             base.OnTweakEnabled();
-            harmony.PatchAll(typeof(ForceGunPatches));
+            _harmony.PatchAll(typeof(ForceGunPatches));
 
             if (IsGameplayScene())
             {
@@ -30,7 +30,7 @@ namespace UltraTweaker.Tweaks.Impl
         public override void OnTweakDisabled()
         {
             base.OnTweakDisabled();
-            harmony.UnpatchSelf();
+            _harmony.UnpatchSelf();
             GunControl.Instance.gunPanel[0].SetActive(false);
         }
 

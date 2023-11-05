@@ -2,14 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UltraTweaker.Subsettings.Impl;
 using UnityEngine;
+using UltraTweaker.UIElements.Impl;
 
 namespace UltraTweaker.Tweaks.Impl
 {
     [TweakMetadata("Close Quarters", $"{UltraTweaker.GUID}.mutator_close_quarters", "Blesses enemies when far.", $"{UltraTweaker.GUID}.mutators", 0, "Cross", true, true)]
     public class CloseQuarters : Tweak
     {
-        private Harmony harmony = new($"{UltraTweaker.GUID}.mutator_close_quarters");
+        private Harmony _harmony = new($"{UltraTweaker.GUID}.mutator_close_quarters");
 
         public CloseQuarters()
         {
@@ -23,13 +25,13 @@ namespace UltraTweaker.Tweaks.Impl
         public override void OnTweakEnabled()
         {
             base.OnTweakEnabled();
-            harmony.PatchAll(typeof(DistancePatches));
+            _harmony.PatchAll(typeof(DistancePatches));
         }
 
         public override void OnTweakDisabled()
         {
             base.OnTweakDisabled();
-            harmony.UnpatchSelf();
+            _harmony.UnpatchSelf();
         }
 
         public static class DistancePatches

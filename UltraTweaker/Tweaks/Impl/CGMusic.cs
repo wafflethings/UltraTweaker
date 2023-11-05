@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using UltraTweaker.Subsettings.Impl;
+using UltraTweaker.UIElements.Impl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,7 +15,7 @@ namespace UltraTweaker.Tweaks.Impl
     [TweakMetadata("CG Music", $"{UltraTweaker.GUID}.cg_music", "Replace the music for The Cyber Grind.", $"{UltraTweaker.GUID}.cybergrind", 1)]
     public class CGMusic : Tweak
     {
-        private Harmony harmony = new($"{UltraTweaker.GUID}.cg_music");
+        private Harmony _harmony = new($"{UltraTweaker.GUID}.cg_music");
         public static readonly string MusicPath = Path.Combine(PathUtils.ModPath(), "Cybergrind Music");
 
         public List<AudioClip> Music;
@@ -58,13 +60,13 @@ namespace UltraTweaker.Tweaks.Impl
     public override void OnTweakEnabled()
         {
             base.OnTweakEnabled();
-            harmony.PatchAll(typeof(CGMusicPatches));
+            _harmony.PatchAll(typeof(CGMusicPatches));
         }
 
         public override void OnTweakDisabled()
         {
             base.OnTweakDisabled();
-            harmony.UnpatchSelf();
+            _harmony.UnpatchSelf();
         }
 
         public override void OnSceneLoad(Scene scene, LoadSceneMode mode)

@@ -9,18 +9,18 @@ namespace UltraTweaker.Tweaks.Impl
     [TweakMetadata("Explode On Death", $"{UltraTweaker.GUID}.explode_self", "Explode and destroy everything when you die.", $"{UltraTweaker.GUID}.fun", 1)]
     public class ExplodeOnDeath : Tweak
     {
-        private Harmony harmony = new($"{UltraTweaker.GUID}.explode_self");
+        private Harmony _harmony = new($"{UltraTweaker.GUID}.explode_self");
 
         public override void OnTweakEnabled()
         {
             base.OnTweakEnabled();
-            harmony.PatchAll(typeof(ExplosionPatches));
+            _harmony.PatchAll(typeof(ExplosionPatches));
         }
 
         public override void OnTweakDisabled()
         {
             base.OnTweakDisabled();
-            harmony.UnpatchSelf();
+            _harmony.UnpatchSelf();
         }
 
         public static class ExplosionPatches

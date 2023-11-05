@@ -10,29 +10,29 @@ namespace UltraTweaker.Tweaks.Impl
     [TweakMetadata("Skull Florpification", $"{UltraTweaker.GUID}.florpify_:3", "Replace skulls with Florp.", $"{UltraTweaker.GUID}.fun", 0)]
     public class Florpify : Tweak
     {
-        private Harmony harmony = new($"{UltraTweaker.GUID}.florpify_:3");
-        private static Dictionary<ItemType, GameObject> Florps;
+        private Harmony _harmony = new($"{UltraTweaker.GUID}.florpify_:3");
+        private static Dictionary<ItemType, GameObject> _florps;
 
         public override void OnTweakEnabled()
         {
             base.OnTweakEnabled();
 
-            if (Florps == null)
+            if (_florps == null)
             {
-                Florps = new()
+                _florps = new()
                 {
                     { ItemType.SkullBlue, AssetHandler.Bundle.LoadAsset<GameObject>("Blue Florp") },
                     { ItemType.SkullRed, AssetHandler.Bundle.LoadAsset<GameObject>("Red Florp") }
                 };
             }
 
-            harmony.PatchAll(typeof(FlorpyPatches));
+            _harmony.PatchAll(typeof(FlorpyPatches));
         }
 
         public override void OnTweakDisabled()
         {
             base.OnTweakDisabled();
-            harmony.UnpatchSelf();
+            _harmony.UnpatchSelf();
 
             // i cba undoing this one lmao
         }
@@ -46,7 +46,7 @@ namespace UltraTweaker.Tweaks.Impl
                 if (renderer != null)
                 {
                     renderer.enabled = false;
-                    GameObject newFlorp = Instantiate(Florps[__instance.GetComponent<ItemIdentifier>().itemType], renderer.transform);
+                    GameObject newFlorp = Instantiate(_florps[__instance.GetComponent<ItemIdentifier>().itemType], renderer.transform);
                     newFlorp.GetComponentInChildren<Renderer>().material.shader = renderer.material.shader;
                 }
             }

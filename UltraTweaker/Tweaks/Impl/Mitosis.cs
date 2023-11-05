@@ -2,16 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UltraTweaker.Subsettings.Impl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UltraTweaker.UIElements.Impl;
 
 namespace UltraTweaker.Tweaks.Impl
 {
     [TweakMetadata("Mitosis", $"{UltraTweaker.GUID}.mutator_mitosis", "Duplicates enemies.", $"{UltraTweaker.GUID}.mutators", 7, "Mitosis", false, true)]
     public class Mitosis : Tweak
     {
-        private Harmony harmony = new($"{UltraTweaker.GUID}.mutator_mitosis");
-        public static List<ActivateNextWave> alreadyMultiplied = new();
+        private Harmony _harmony = new($"{UltraTweaker.GUID}.mutator_mitosis");
+        public static List<ActivateNextWave> AlreadyMultiplied = new();
 
         public Mitosis()
         {
@@ -25,19 +27,19 @@ namespace UltraTweaker.Tweaks.Impl
         public override void OnTweakEnabled()
         {
             base.OnTweakEnabled();
-            alreadyMultiplied.Clear();
-            harmony.PatchAll(typeof(MitosisPatches));
+            AlreadyMultiplied.Clear();
+            _harmony.PatchAll(typeof(MitosisPatches));
         }
 
         public override void OnTweakDisabled()
         {
             base.OnTweakDisabled();
-            harmony.UnpatchSelf();
+            _harmony.UnpatchSelf();
         }
 
         public override void OnSceneLoad(Scene scene, LoadSceneMode mode)
         {
-            alreadyMultiplied.Clear();
+            AlreadyMultiplied.Clear();
         }
 
         public static class MitosisPatches
