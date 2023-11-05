@@ -30,7 +30,7 @@ namespace UltraTweaker
                 asm = Assembly.GetExecutingAssembly();
             }
 
-            return asm.Location.Substring(0, asm.Location.LastIndexOf(@"\"));
+            return asm.Location.Substring(0, asm.Location.LastIndexOf(Path.DirectorySeparatorChar));
         }
     }
 
