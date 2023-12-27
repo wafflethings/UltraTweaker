@@ -83,9 +83,8 @@ namespace UltraTweaker.Handlers
                 if (data != "")
                 {
                     HudMessageReceiver.Instance.SendHudMessage(data);
-                    HudMessageReceiver.Instance.text.resizeTextMaxSize = HudMessageReceiver.Instance.text.fontSize;
-                    HudMessageReceiver.Instance.text.resizeTextMinSize = 8;
-                    HudMessageReceiver.Instance.text.resizeTextForBestFit = true;
+                    HudMessageReceiver.Instance.text.fontSizeMax = HudMessageReceiver.Instance.text.fontSize;
+                    HudMessageReceiver.Instance.text.fontSizeMin = 8;
                 }
             }
 

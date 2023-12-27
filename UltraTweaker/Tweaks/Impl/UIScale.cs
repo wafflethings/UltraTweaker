@@ -167,8 +167,8 @@ namespace UltraTweaker.Tweaks.Impl
             [HarmonyPostfix]
             static void PatchBossbarScale(BossHealthBar __instance)
             {
-                float BarScale = GetInstance<UIScale>().Subsettings["bossbar_hud_scale"].GetValue<int>();
-                __instance.bossBar.transform.localScale *= BarScale / 100;
+                float barScale = GetInstance<UIScale>().Subsettings["bossbar_hud_scale"].GetValue<int>();
+                __instance.transform.localScale *= barScale / 100;
             }
         }
     }

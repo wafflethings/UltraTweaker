@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TMPro;
 using UltraTweaker.Subsettings;
 using UltraTweaker.Tweaks;
 using UnityEngine;
@@ -136,7 +137,7 @@ namespace UltraTweaker.Handlers
                 }
             }
 
-            NewButton.ChildByName("Text").GetComponent<Text>().text = "ULTRATWEAKER";
+            NewButton.ChildByName("Text").GetComponent<TMP_Text>().text = "ULTRATWEAKER";
             NewButton.GetComponent<Button>().onClick = new();
 
             List<GameObject> toDisable = new()

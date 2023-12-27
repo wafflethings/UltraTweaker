@@ -77,6 +77,15 @@
     <Reference Include="NavMeshComponents">
       <HintPath>Libs\Managed\NavMeshComponents.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Addressables">
+      <HintPath>Libs\Managed\Unity.Addressables.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ResourceManager">
+      <HintPath>Libs\Managed\Unity.ResourceManager.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>Libs\Managed\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>Libs\Managed\UnityEngine.dll</HintPath>
     </Reference>
@@ -270,9 +279,5 @@
     <Reference Include="UnityUIExtensions">
       <HintPath>Libs\Managed\UnityUIExtensions.dll</HintPath>
     </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Publicize Include="Assembly-CSharp" />
   </ItemGroup>
 </Project>

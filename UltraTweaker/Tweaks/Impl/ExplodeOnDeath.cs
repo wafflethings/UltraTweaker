@@ -30,7 +30,7 @@ namespace UltraTweaker.Tweaks.Impl
             {
                 if (NewMovement.Instance.dead)
                 {
-                    GameObject originalExplosion = GunSetter.Instance.shotgunPump[0].GetComponent<Shotgun>().explosion;
+                    GameObject originalExplosion = GunSetter.Instance.shotgunPump[0].LoadAssetAsync<GameObject>().WaitForCompletion().GetComponent<Shotgun>().explosion;
                     GameObject deathExplosion = Instantiate(originalExplosion, NewMovement.Instance.transform.position, NewMovement.Instance.transform.rotation);
 
                     foreach (Explosion explosion in deathExplosion.GetComponentsInChildren<Explosion>())
